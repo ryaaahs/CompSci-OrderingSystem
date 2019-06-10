@@ -87,26 +87,30 @@ public class Side extends Order {
         }
 
         if(nameType.equals("Sour Cream & Chives Potato")){
-            contain.add("Plain Potato");
             contain.add("Chives");
             contain.add("Sour Cream");
             price = 0.1;
         }
 
         if(nameType.equals("Bacon Cheese Potato")){
-            contain.add("Plain Potato");
             contain.add("Bacon Bits");
             contain.add("Cheese Sauces");
             contain.add("Shredded Cheese");
             price = 0.1;
         }
 
-        if(nameType.equals("Plain Potato")){
-            contain.add("Plain Potato");
+        if(nameType.equals("Chilli Cheese Potato")){
             contain.add("Chilli");
             contain.add("Cheese Sauces");
             contain.add("Shredded Cheese");
             price = 0.1;
         }
     }
+        public String toString(){
+            if(nameType.contentEquals("French Fries") || nameType.contentEquals("Chilli")){
+                return size + " " + nameType;
+            }else{
+                return nameType;
+            }
+        }
 }

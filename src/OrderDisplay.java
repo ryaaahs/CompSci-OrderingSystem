@@ -14,6 +14,7 @@ public class OrderDisplay {
         String lastBurger = "0";
         String lastChicken = "0";
         String lastSalad = "0";
+        String lastSide = "0";
 
 
         while (order) {
@@ -42,7 +43,7 @@ public class OrderDisplay {
                     startingOrder = false;
                 }else if(choice == 4){
                     //Display Side list
-                    displaySalad();
+                    displaySide();
                     list = "Side";
                     startingOrder = false;
                 }else if(choice == 5){
@@ -1190,6 +1191,149 @@ public class OrderDisplay {
                                 break;
                         }
                     }
+
+                    if (list.contentEquals("Side") || list.contentEquals("SideSkip")) {
+                            //When the user picks one of them
+                            String sideChoice;
+                            if (!list.contentEquals("SideSkip")) {
+                                sideChoice = scrChoiceStr.nextLine();
+                            } else {
+                                sideChoice = lastSide;
+                            }
+
+                            switch(sideChoice){
+                                case "1":
+                                    frySize();
+                                    String fry = scrChoiceStr.nextLine();
+                                    if(fry.contentEquals("1")){
+                                        fry = "Small";
+                                    }else if(fry.contentEquals("2")){
+                                        fry = "Medium";
+                                    }else{
+                                        fry = "Large";
+                                    }
+                                    Side s1 = new Side("French Fries", fry, "Side");
+                                    orderList.add(s1);
+                                    displayOrder(orderList);
+                                    anotherSide(s1);
+                                    lastSide = "1";
+                                    list = afterDisplay("SideSkip", orderList);
+                                    break;
+                                case"2":
+                                    Side s2 = new Side("Poutine", "Side");
+                                    orderList.add(s2);
+                                    displayOrder(orderList);
+                                    anotherSide(s2);
+                                    lastSide = "2";
+                                    list = afterDisplay("SideSkip", orderList);
+                                    break;
+                                case"3":
+                                    Side s3 = new Side("Bacon Poutine", "Side");
+                                    orderList.add(s3);
+                                    displayOrder(orderList);
+                                    anotherSide(s3);
+                                    lastSide = "3";
+                                    list = afterDisplay("SideSkip", orderList);
+                                    break;
+                                case"4":
+                                    Side s4 = new Side("Chilli Cheese Fries", "Side");
+                                    orderList.add(s4);
+                                    displayOrder(orderList);
+                                    anotherSide(s4);
+                                    lastSide = "4";
+                                    list = afterDisplay("SideSkip", orderList);
+                                    break;
+                                case"5":
+                                    Side s5 = new Side("Chilli Cheese Nachos", "Side");
+                                    orderList.add(s5);
+                                    displayOrder(orderList);
+                                    anotherSide(s5);
+                                    lastSide = "5";
+                                    list = afterDisplay("SideSkip", orderList);
+                                    break;
+                                case"6":
+                                    chilliSize();
+                                    String chilli = scrChoiceStr.nextLine();
+                                    if(chilli.contentEquals("1")){
+                                        chilli = "Small";
+                                    }else{
+                                        chilli = "Large";
+                                    }
+                                    Side s6 = new Side("Chilli", chilli ,"Chilli");
+                                    orderList.add(s6);
+                                    displayOrder(orderList);
+                                    anotherSide(s6);
+                                    lastSide = "6";
+                                    list = afterDisplay("SideSkip", orderList);
+                                    break;
+                                case"7":
+                                    Side s7 = new Side("Garden Side Salad", "Salad");
+                                    orderList.add(s7);
+                                    displayOrder(orderList);
+                                    anotherSide(s7);
+                                    lastSide = "7";
+                                    list = afterDisplay("SideSkip", orderList);
+                                    break;
+                                case"8":
+                                    Side s8 = new Side("Caesar Side Salad", "Salad");
+                                    orderList.add(s8);
+                                    displayOrder(orderList);
+                                    anotherSide(s8);
+                                    lastSide = "8";
+                                    list = afterDisplay("SideSkip", orderList);
+                                    break;
+                                case"9":
+                                    Side s9 = new Side("Plain Potato", "Potato");
+                                    orderList.add(s9);
+                                    displayOrder(orderList);
+                                    anotherSide(s9);
+                                    lastSide = "9";
+                                    list = afterDisplay("SideSkip", orderList);
+                                    break;
+                                case"10":
+                                    Side s10 = new Side("Sour Cream & Chives Potato", "Potato");
+                                    orderList.add(s10);
+                                    displayOrder(orderList);
+                                    anotherSide(s10);
+                                    lastSide = "10";
+                                    list = afterDisplay("SideSkip", orderList);
+                                    break;
+                                case"11":
+                                    Side s11 = new Side("Bacon Cheese Potato", "Potato");
+                                    orderList.add(s11);
+                                    displayOrder(orderList);
+                                    anotherSide(s11);
+                                    lastSide = "11";
+                                    list = afterDisplay("SideSkip", orderList);
+                                    break;
+                                case"12":
+                                    Side s12 = new Side("Chilli Cheese Potato", "Potato");
+                                    orderList.add(s12);
+                                    displayOrder(orderList);
+                                    anotherSide(s12);
+                                    lastSide = "12";
+                                    list = afterDisplay("SideSkip", orderList);
+                                    break;
+                                case"13":
+                                    list = "Choice";
+                                    if(orderList.isEmpty()){
+                                        displayList();
+                                    }else{
+                                        displayListOther();
+                                    }
+                                    break;
+                                default:
+                                    list = "Choice";
+                                    nl();
+                                    print("Error: That's not a accessible option");
+                                    if(orderList.isEmpty()){
+                                        displayList();
+                                    }else{
+                                        displayListOther();
+                                    }
+                                    break;
+                            }
+                        }
                 }
             }
         }
@@ -1232,6 +1376,10 @@ public class OrderDisplay {
             //Display Chicken list
             displaySalad();
             list = "Salad";
+        }else if (choice == 4) {
+            //Display Chicken list
+            displaySide();
+            list = "Side";
         } else {
             //Display an error if a nonvalid choice is picked
             print("Error: Invaild Choice");
@@ -1310,6 +1458,8 @@ public class OrderDisplay {
                 list = currentList;
             }else if(currentList.contentEquals("Salad") || currentList.contentEquals("SaladSkip")){
                 list = currentList;
+            }else if(currentList.contentEquals("Side") || currentList.contentEquals("SideSkip")){
+                list = currentList;
             }else{
                 list = "";
             }
@@ -1317,7 +1467,6 @@ public class OrderDisplay {
             if(obj.isEmpty()){
                 displayList();
                 list = listChoice();
-                print("ahahha");
             }else{
                 displayListOther();
                 list = listChoiceOther();
@@ -1334,6 +1483,9 @@ public class OrderDisplay {
             }else if(currentList.contentEquals("Salad") || currentList.contentEquals("SaladSkip")){
                 list = "Salad";
                 displaySalad();
+            }else if(currentList.contentEquals("Side") || currentList.contentEquals("SideSkip")){
+                list = "Side";
+                displaySide();
             }else{
                 list = "";
             }
@@ -1658,6 +1810,22 @@ public class OrderDisplay {
         print("(4) **Return**");
     }
 
+    public static void frySize(){
+        nl();
+        printStar();
+        nl();
+        print("What size will be your Fries be");
+        print("(1) Small");
+        print("(2) Medium");
+        print("(3) Large");
+    }
+
+    public static void chilliSize(){
+        print("What size do you want your chilli?");
+        print("(1) Small");
+        print("(2) Large");
+    }
+
     public static void wantToCombo() {
         nl();
         printStar();
@@ -1692,6 +1860,16 @@ public class OrderDisplay {
         print("(1) Would you like to order another " + s1.nameType + " " + s1.size);
         print("(2) Return to the Main List?");
         print("(3) Return back to Salad List?");
+        print("(4) End your order?");
+    }
+
+    public static void anotherSide(Side s1){
+        nl();
+        printStar();
+        nl();
+        print("(1) Would you like to order another " + s1.nameType);
+        print("(2) Return to the Main List?");
+        print("(3) Return back to Side List?");
         print("(4) End your order?");
     }
 
