@@ -15,6 +15,7 @@ public class OrderDisplay {
         String lastChicken = "0";
         String lastSalad = "0";
         String lastSide = "0";
+        String lastDrink = "0";
 
 
         while (order) {
@@ -48,7 +49,7 @@ public class OrderDisplay {
                     startingOrder = false;
                 }else if(choice == 5){
                     //Display the Drink list
-                    //displaySalad();
+                    displayDrink();
                     list = "Drink";
                     startingOrder = false;
                 }else if(choice == 6){
@@ -79,15 +80,15 @@ public class OrderDisplay {
                         list = "Chicken";
                     }else if(choice == 3){
                         //Display Salad list
-                        //displaySalad();
+                        displaySalad();
                         list = "Salad";
                     }else if(choice == 4){
                         //Display Side list
-                        displaySalad();
+                        displaySide();
                         list = "Side";
                     }else if(choice == 5){
                         //Display the Drink list
-                        //displaySalad();
+                        displayDrink();
                         list = "Drink";
                     }else if(choice == 6){
                         //Display ETC list
@@ -113,6 +114,7 @@ public class OrderDisplay {
                     }
                 }
 
+                    //Checken Order list
                     if (list.contentEquals("Chicken") || list.contentEquals("ChickenSkip")) {
                         //When the user picks one of them
                         String chickenChoice;
@@ -568,6 +570,7 @@ public class OrderDisplay {
                         }
                     }
 
+                    //Burger Order List
                     if (list.contentEquals("Hamburger") || list.contentEquals("HamburgerSkip")) {
                         //When the user picks one of them
                         String burgerChoice;
@@ -1050,6 +1053,7 @@ public class OrderDisplay {
                         }
                     }
 
+                    //Salad Order List
                     if (list.contentEquals("Salad") || list.contentEquals("SaladSkip")) {
                         //When the user picks one of them
                         String saladChoice;
@@ -1192,6 +1196,7 @@ public class OrderDisplay {
                         }
                     }
 
+                    //Side Order list
                     if (list.contentEquals("Side") || list.contentEquals("SideSkip")) {
                             //When the user picks one of them
                             String sideChoice;
@@ -1334,6 +1339,195 @@ public class OrderDisplay {
                                     break;
                             }
                         }
+
+                    //Drink Order list
+                    if (list.contentEquals("Drink") || list.contentEquals("DrinkSkip")) {
+                        //When the user picks one of them
+                        String drinkChoice;
+                        if (!list.contentEquals("DrinkSkip")) {
+                            drinkChoice = scrChoiceStr.nextLine();
+                        } else {
+                            drinkChoice = lastDrink;
+                        }
+                        String drinkSize = "";
+                        boolean ice;
+                        switch(drinkChoice){
+                            case"1":
+                                drinkSize = drinkSizeChoice();
+                                ice = wantIce();
+                                Drink d1 = new Drink("Soda", drinkSize, ice, "Coca-cola", "Soda");
+                                orderList.add(d1);
+                                displayOrder(orderList);
+                                anotherDrink(d1);
+                                lastDrink = "1";
+                                list = afterDisplay("DrinkSkip", orderList);
+                                break;
+                            case"2":
+                                drinkSize = drinkSizeChoice();
+                                ice = wantIce();
+                                Drink d2 = new Drink("Soda", drinkSize, ice, "Coca-cola Zero", "Soda");
+                                orderList.add(d2);
+                                displayOrder(orderList);
+                                anotherDrink(d2);
+                                lastDrink = "2";
+                                list = afterDisplay("DrinkSkip", orderList);
+                                break;
+                            case"3":
+                                drinkSize = drinkSizeChoice();
+                                ice = wantIce();
+                                Drink d3 = new Drink("Soda", drinkSize, ice, "Diet Coke", "Soda");
+                                orderList.add(d3);
+                                displayOrder(orderList);
+                                anotherDrink(d3);
+                                lastDrink = "3";
+                                list = afterDisplay("DrinkSkip", orderList);
+                                break;
+                            case"4":
+                                drinkSize = drinkSizeChoice();
+                                ice = wantIce();
+                                Drink d4 = new Drink("Soda", drinkSize, ice, "Sprite", "Soda");
+                                orderList.add(d4);
+                                displayOrder(orderList);
+                                anotherDrink(d4);
+                                lastDrink = "4";
+                                list = afterDisplay("DrinkSkip", orderList);
+                                break;
+                            case"5":
+                                drinkSize = drinkSizeChoice();
+                                ice = wantIce();
+                                Drink d5 = new Drink("Soda", drinkSize, ice, "Barq's Root Beer", "Soda");
+                                orderList.add(d5);
+                                displayOrder(orderList);
+                                anotherDrink(d5);
+                                lastDrink = "5";
+                                list = afterDisplay("DrinkSkip", orderList);
+                                break;
+                            case"6":
+                                drinkSize = drinkSizeChoice();
+                                ice = wantIce();
+                                Drink d6 = new Drink("Soda", drinkSize, ice, "Fanata Orange", "Soda");
+                                orderList.add(d6);
+                                displayOrder(orderList);
+                                anotherDrink(d6);
+                                lastDrink = "6";
+                                list = afterDisplay("DrinkSkip", orderList);
+                                break;
+                            case"7":
+                                drinkSize = drinkSizeChoice();
+                                ice = wantIce();
+                                Drink d7 = new Drink("Soda", drinkSize, ice, "Nestea", "Soda");
+                                orderList.add(d7);
+                                displayOrder(orderList);
+                                anotherDrink(d7);
+                                lastDrink = "7";
+                                list = afterDisplay("DrinkSkip", orderList);
+                                break;
+                            case"8":
+                                drinkSize = drinkSizeChoice();
+                                ice = wantIce();
+                                Drink d8 = new Drink("Soda", drinkSize, ice, "Fruit Passion Fruitopia", "Soda");
+                                orderList.add(d8);
+                                displayOrder(orderList);
+                                anotherDrink(d8);
+                                lastDrink = "8";
+                                list = afterDisplay("DrinkSkip", orderList);
+                                break;
+                            case"9":
+                                Drink d9 = new Drink("Water", "Dasani", "Water");
+                                orderList.add(d9);
+                                displayOrder(orderList);
+                                anotherDrink(d9);
+                                lastDrink = "9";
+                                list = afterDisplay("DrinkSkip", orderList);
+                                break;
+                            case"10":
+                                Drink d10 = new Drink("Hot Drink", "Coffee", "Hot Drink");
+                                orderList.add(d10);
+                                displayOrder(orderList);
+                                anotherDrink(d10);
+                                lastDrink = "10";
+                                list = afterDisplay("DrinkSkip", orderList);
+                                break;
+                            case"11":
+                                Drink d11 = new Drink("Hot Drink", "Decaf Coffee", "Hot Drink");
+                                orderList.add(d11);
+                                displayOrder(orderList);
+                                anotherDrink(d11);
+                                lastDrink = "11";
+                                list = afterDisplay("DrinkSkip", orderList);
+                                break;
+                            case"12":
+                                Drink d12 = new Drink("Milk", "Milk", "Milk");
+                                orderList.add(d12);
+                                displayOrder(orderList);
+                                anotherDrink(d12);
+                                lastDrink = "12";
+                                list = afterDisplay("DrinkSkip", orderList);
+                                break;
+                            case"13":
+                                Drink d13 = new Drink("Milk", "Chocolate Milk", "Milk");
+                                orderList.add(d13);
+                                displayOrder(orderList);
+                                anotherDrink(d13);
+                                lastDrink = "13";
+                                list = afterDisplay("DrinkSkip", orderList);
+                                break;
+                            case"14":
+                                Drink d14 = new Drink("Packaged Drink", "Minute Maid Apple Juice", "Packaged Drink");
+                                orderList.add(d14);
+                                displayOrder(orderList);
+                                anotherDrink(d14);
+                                lastDrink = "14";
+                                list = afterDisplay("DrinkSkip", orderList);
+                            case"15":
+                                Drink d15 = new Drink("Packaged Drink", "Minute Maid Orange Juice", "Packaged Drink");
+                                orderList.add(d15);
+                                displayOrder(orderList);
+                                anotherDrink(d15);
+                                lastDrink = "15";
+                                list = afterDisplay("DrinkSkip", orderList);
+                                break;
+                            case"16":
+                                drinkSize = drinkSizeChoice();
+                                ice = wantIce();
+                                Drink d16 = new Drink("Lemonade", drinkSize, ice, "Lemonade", "Lemonade");
+                                orderList.add(d16);
+                                displayOrder(orderList);
+                                anotherDrink(d16);
+                                lastDrink = "16";
+                                list = afterDisplay("DrinkSkip", orderList);
+                                break;
+                            case"17":
+                                drinkSize = drinkSizeChoice();
+                                ice = wantIce();
+                                Drink d17 = new Drink("Lemonade", drinkSize, ice, "Strawberry Lemonade", "Lemonade");
+                                orderList.add(d17);
+                                displayOrder(orderList);
+                                anotherDrink(d17);
+                                lastDrink = "17";
+                                list = afterDisplay("DrinkSkip", orderList);
+                                break;
+                            case"18":
+                                list = "Choice";
+                                    if(orderList.isEmpty()){
+                                        displayList();
+                                    }else{
+                                        displayListOther();
+                                    }
+                                    break;
+                            default:
+                                list = "Choice";
+                                    nl();
+                                    print("Error: That's not a accessible option");
+                                    if(orderList.isEmpty()){
+                                        displayList();
+                                    }else{
+                                        displayListOther();
+                                    }
+                                    break;
+
+                        }
+                    }
                 }
             }
         }
@@ -1542,6 +1736,22 @@ public class OrderDisplay {
         return choice;
     }
 
+    public static boolean wantIce(){
+        //Ask the user if they want ice within a drink
+        Scanner wantIce = new Scanner(System.in);
+        nl();
+        printStar();
+        nl();
+        print("Would you like ice in your drink? (y/n)");
+        String ice = wantIce.nextLine();
+
+        if(ice.contentEquals("y")){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public static Burger dontWantToComboBurger(Burger b1){
         print("You added a " + b1.nameType + " to your order");
         return b1;
@@ -1660,6 +1870,30 @@ public class OrderDisplay {
             return false;
         }
         //scrChoiceStr.close();
+    }
+
+    //Drink Size
+    public static String drinkSizeChoice() {
+        Scanner scrComboChoice = new Scanner(System.in);
+        drinkSize();
+        String currentDrinkSize = scrComboChoice.nextLine();
+        currentDrinkSize = currentDrinkSize.toLowerCase().trim();
+
+        if (currentDrinkSize.equals("1")) {
+            currentDrinkSize = "Small";
+        } else if (currentDrinkSize.equals("2")) {
+            currentDrinkSize = "Medium";
+        } else if (currentDrinkSize.equals("3")) {
+            currentDrinkSize = "Large";
+        } else if (currentDrinkSize.equals("4")) {
+            currentDrinkSize = "";
+            //Return
+        } else {
+            currentDrinkSize = "";
+            //Throw an error then return
+        }
+        //scrComboChoice.close();
+        return currentDrinkSize;
     }
 
     public static String orderSize(){
@@ -1810,6 +2044,17 @@ public class OrderDisplay {
         print("(4) **Return**");
     }
 
+    public static void drinkSize(){
+        nl();
+        printStar();
+        nl();
+        print("What size will be your Combo");
+        print("(1) Small");
+        print("(2) Medium");
+        print("(3) Large");
+        print("(4) **Return**");
+    }
+
     public static void frySize(){
         nl();
         printStar();
@@ -1870,6 +2115,16 @@ public class OrderDisplay {
         print("(1) Would you like to order another " + s1.nameType);
         print("(2) Return to the Main List?");
         print("(3) Return back to Side List?");
+        print("(4) End your order?");
+    }
+
+    public static void anotherDrink(Drink s1){
+        nl();
+        printStar();
+        nl();
+        print("(1) Would you like to order another " + s1.name);
+        print("(2) Return to the Main List?");
+        print("(3) Return back to Drink List?");
         print("(4) End your order?");
     }
 
