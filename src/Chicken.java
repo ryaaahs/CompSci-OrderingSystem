@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 public class Chicken extends Order {
     //Chicken label
-    String nameType;
     boolean canCombo;
     String bunType;
 
@@ -13,7 +12,7 @@ public class Chicken extends Order {
     //ArrayList<String> sauce = new ArrayList<String>();
 
     public Chicken(String nameType, String itemType) {
-        super(itemType);
+        super(itemType, nameType);
         this.nameType = nameType;
         chickenList();
     }

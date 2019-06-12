@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 public class Burger extends Order {
-    String nameType;
     boolean canCombo;
     String bunType;
 
@@ -10,8 +9,7 @@ public class Burger extends Order {
     ArrayList<String> base = new ArrayList<String>();
 
     public Burger(String nameType, String itemType) {
-        super(itemType);
-        this.nameType = nameType;
+        super(nameType, itemType);
         burgerList();
     }
 

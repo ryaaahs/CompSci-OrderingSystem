@@ -5,19 +5,17 @@ public class Drink extends Order {
     boolean ice;
 
 
-    public Drink(String drinkType, String size, boolean ice, String name, String itemType){
-        super(itemType);
+    public Drink(String drinkType, String size, boolean ice, String nameType, String itemType){
+        super(itemType, nameType);
         this.drinkType = drinkType;
         this.size = size;
         this.ice = ice;
-        this.name = name;
         typeOfDrink();
     }
 
-    public Drink(String drinkType, String name, String itemType){ // For packaged Drinks/Hot Drinks
-        super(itemType);
+    public Drink(String drinkType, String nameType, String itemType){ // For packaged Drinks/Hot Drinks
+        super(itemType, nameType);
         this.drinkType = drinkType;
-        this.name = name;
         typeOfDrink();
     }
 

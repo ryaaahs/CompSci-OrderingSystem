@@ -2,21 +2,18 @@ import java.util.ArrayList;
 //*******Add a no chicken option
 public class Salad extends Order {
     //String type = "Salad";
-    String nameType;
     String size;
     boolean canCombo;
     ArrayList<String> contain = new ArrayList<String>();
 
     public Salad(String nameType, String size, String itemType){
-        super(itemType);
-        this.nameType = nameType;
+        super(itemType, nameType);
         this.size = size;
         saladList();
     }
 
     public Salad(String nameType, String itemType){
-        super(itemType);
-        this.nameType = nameType;
+        super(itemType, nameType);
         saladList();
     }
 

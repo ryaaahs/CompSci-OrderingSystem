@@ -9,7 +9,7 @@ public class OrderDisplay {
         Scanner scrChoice = new Scanner(System.in);
         Scanner scrChoiceStr = new Scanner(System.in);
         String list = "";
-        int total = 0;
+        double total = 0;
         ArrayList<Order> orderList = new ArrayList<>();
         String lastBurger = "0";
         String lastChicken = "0";
@@ -49,7 +49,7 @@ public class OrderDisplay {
                     startingOrder = false;
                 }else if(choice == 5){
                     //Display the Drink list
-                    displayDrink();
+                    displaySideDrink();
                     list = "Drink";
                     startingOrder = false;
                 }else if(choice == 6){
@@ -66,57 +66,65 @@ public class OrderDisplay {
                 }
 
             }else{
-                //When we are on the Hamburger list
-                if(list.contentEquals("Choice")) {
 
-                    int choice = scrChoice.nextInt();
-                    if (choice == 1) {
-                        //Display Hamburger list
-                        displayHamburger();
-                        list = "Hamburger";
-                    } else if (choice == 2){
-                        //Display Chicken list
-                        displayChicken();
-                        list = "Chicken";
-                    }else if(choice == 3){
-                        //Display Salad list
-                        displaySalad();
-                        list = "Salad";
-                    }else if(choice == 4){
-                        //Display Side list
-                        displaySide();
-                        list = "Side";
-                    }else if(choice == 5){
-                        //Display the Drink list
-                        displayDrink();
-                        list = "Drink";
-                    }else if(choice == 6){
-                        //Display ETC list
-                        //displaySalad();
-                        list = "ETC";
-                    }else if(choice == 7){
-                        //Display Salad list
-                        //displaySalad();
-                        if(!orderList.isEmpty()){
-                            list = "Change Order";
-                        }else{
-                            print("Error: Order is Empty");
-                            nl();
-                            printStar();
-                            nl();
-                        }
-                    }else{
-                        //Display an error if a nonvalid choice is picked
-                        print("Error: Invaild Choice");
-                        nl();
-                        printStar();
-                        nl();
+                    if(list.contentEquals("Order End")){
+                        print("Thanks for ordering at Wendy's!");
+                        print("Your order is: ");
+                        displayOrder(orderList);
+                        total = getOrderPrice(orderList);
+                        System.out.println("Your total is: $" + total);
+                        print("Come back again!!");
+                        order = false;
                     }
-                }
+
+                    if(list.contentEquals("Change Order")){
+                        //Loop through the current order list
+                        print("Which one would you like to change?");
+                        for(int i=0; i < orderList.size(); i++){
+                            if(orderList.get(i).itemType.contentEquals("Salad")) {
+                                System.out.println("(" + (i + 1) + ") " + orderList.get(i));   // + " " + ((Salad) orderList.get(i)).size
+                            }
+                        }
+
+                        int changePick = scrChoice.nextInt();
+                        System.out.println("You are changing the " + orderList.get(changePick - 1));
+
+                        if(orderList.get(changePick - 1).itemType.contentEquals("Salad")){
+                            Salad coSalad = (Salad)orderList.get(changePick - 1);
+                            print("What would you like to Add or Remove from the " + coSalad + " (1)[Add] (2)[Remove]");
+                            for(int i = 0; i < coSalad.contain.size(); i++){
+                                System.out.println("(" + (i + 1) + ") " + coSalad.contain.get(i));
+                            }
+                            int addOrRemove = scrChoice.nextInt();
+                            if(addOrRemove == 1){
+                                //ADD
+                                print("Here are a list you can add to the Salad");
+                                //Display a list of salad options
+                            }else{
+                                //REMOVE
+                                print("What would you like to remove?");
+                                for(int i = 0; i < coSalad.contain.size(); i++){
+                                    System.out.println("(" + (i + 1) + ") " + coSalad.contain.get(i));
+                                }
+                                int removeIndex = scrChoice.nextInt();
+                                if(!(removeIndex >= coSalad.contain.size())){
+                                    print("You removed: " + coSalad.contain.get(removeIndex - 1));
+                                    coSalad.contain.remove(removeIndex - 1);
+                                    nl();
+                                    for(int i = 0; i < coSalad.contain.size(); i++){
+                                    System.out.println("(" + (i + 1) + ") " + coSalad.contain.get(i));
+                                    }
+                                }
+                            }
+                        }
+
+
+
+                    }
 
                     //Checken Order list
                     if (list.contentEquals("Chicken") || list.contentEquals("ChickenSkip")) {
-                        //When the user picks one of them
+                        //When the user picks one of themn
                         String chickenChoice;
                         if(!list.contentEquals("ChickenSkip")){
                              chickenChoice = scrChoiceStr.nextLine();
@@ -1549,6 +1557,15 @@ public class OrderDisplay {
 
     }
 
+    public static double getOrderPrice(ArrayList<Order> order){
+        double val = 0;
+        for(int i=0; i < order.size(); i++){
+            val += order.get(i).getPrice();
+
+        }
+        return val;
+    }
+
     public static Burger addBurger(Burger b1){
         return b1;
     }
@@ -1567,13 +1584,21 @@ public class OrderDisplay {
             displayChicken();
             list = "Chicken";
         } else if (choice == 3) {
-            //Display Chicken list
+            //Display Salad list
             displaySalad();
             list = "Salad";
         }else if (choice == 4) {
-            //Display Chicken list
+            //Display Side list
             displaySide();
             list = "Side";
+        }else if (choice == 5) {
+            //Display Drink list
+            displayDrink();
+            list = "Drink";
+        }else if (choice == 6) {
+            //Display ETC list
+            displayDrink();
+            list = "ETC";
         } else {
             //Display an error if a nonvalid choice is picked
             print("Error: Invaild Choice");
@@ -1605,23 +1630,21 @@ public class OrderDisplay {
         }else if (choice == 4) {
             //Display Side list
             displaySide();
-            list = "Salad";
+            list = "Side";
         }else if (choice == 5) {
             //Display Drinks list
             displayDrink();
-            list = "Salad";
+            list = "Drink";
         }else if (choice == 6) {
             //Display ETC list
             //displayETC();
-            list = "Salad";
+            list = "ETC";
         }else if (choice == 7) {
             //Change Order
-            //ChangeOrder();
-            list = "Salad";
+            list = "Change Order";
         }else if (choice == 8) {
-            //End order
-            list = "";
-        } else {
+            list = "Order End";
+        }else {
             //Display an error if a nonvalid choice is picked
             print("Error: Invaild Choice");
             list = "Choice";
@@ -1654,9 +1677,12 @@ public class OrderDisplay {
                 list = currentList;
             }else if(currentList.contentEquals("Side") || currentList.contentEquals("SideSkip")){
                 list = currentList;
+            }else if(currentList.contentEquals("Drink") || currentList.contentEquals("DrinkSkip")){
+                list = currentList;
             }else{
                 list = "";
             }
+
         }else if(nonComboChoice.contentEquals("2")){
             if(obj.isEmpty()){
                 displayList();
@@ -1685,9 +1711,10 @@ public class OrderDisplay {
             }
         }else if(nonComboChoice.contentEquals("4")){
             //End the Order
-            list = "";
+            list = "Order End";
         }else{
             //Throw an error and return to the main list
+            print("Error: That's not a accessible option");
             list = "Choice";
             displayList();
         }
@@ -2048,7 +2075,7 @@ public class OrderDisplay {
         nl();
         printStar();
         nl();
-        print("What size will be your Combo");
+        print("What size will be your Drink be?");
         print("(1) Small");
         print("(2) Medium");
         print("(3) Large");
@@ -2059,7 +2086,7 @@ public class OrderDisplay {
         nl();
         printStar();
         nl();
-        print("What size will be your Fries be");
+        print("What size will be your Fries be?");
         print("(1) Small");
         print("(2) Medium");
         print("(3) Large");
@@ -2211,6 +2238,32 @@ public class OrderDisplay {
         print("(15) Minute Maid Orange Juice");
         print("(16) Lemonade");
         print("(17) Strawberry Lemonade");
+    }
+
+    public static void displaySideDrink(){
+        nl();
+        printStar();
+        nl();
+        print("Here are the list of Drinks to order from.");
+        nl();
+        print("(1) Coca-Cola");
+        print("(2) Coca-Cola Zero");
+        print("(3) Diet Coke");
+        print("(4) Sprite");
+        print("(5) Barq's Root Beer");
+        print("(6) Fanta Orange");
+        print("(7) Nestea");
+        print("(8) Fruit Passion Fruitopia");
+        print("(9) Dasani");
+        print("(10) Coffee");
+        print("(11) Decaf Coffee");
+        print("(12) Milk");
+        print("(13) Chocolate Milk");
+        print("(14) Minute Maid Apple Juice");
+        print("(15) Minute Maid Orange Juice");
+        print("(16) Lemonade");
+        print("(17) Strawberry Lemonade");
+        print("(18) **Return**");
     }
 
     public static void displaySide(){
