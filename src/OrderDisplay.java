@@ -18,6 +18,9 @@ public class OrderDisplay {
         String lastDrink = "0";
 
         //Change Holders
+        Burger changeBurger = null;
+        Chicken changeChicken = null;
+        Salad coSalad = null;
         Salad changeSalad = null;
         Drink chanageDrink = null;
         Side changeSide = null;
@@ -73,592 +76,371 @@ public class OrderDisplay {
 
             }else{
 
-                    if(list.contentEquals("Order End")){
-                        print("Thanks for ordering at Wendy's!");
-                        print("Your order is: ");
-                        displayOrder(orderList);
-                        total = getOrderPrice(orderList);
-                        System.out.println("Your total is: $" + total);
-                        print("Come back again!!");
-                        order = false;
+                if(list.contentEquals("Order End")){
+                    print("Thanks for ordering at Wendy's!");
+                    print("Your order is: ");
+                    displayOrder(orderList);
+                    total = getOrderPrice(orderList);
+                    System.out.println("Your total is: $" + total);
+                    print("Come back again!!");
+                    order = false;
+                }
+
+                if(list.contentEquals("Change Order")){
+                    //Loop through the current order list
+                    int changePick = 1;
+                    if(aRPick == 0) {
+                        nl();
+                        printStar();
+                        nl();
+                        print("Which one would you like to change?");
+                        for (int i = 0; i < orderList.size(); i++) {
+                            if (orderList.get(i).itemType.contentEquals("Salad")) {
+                                System.out.println("(" + (i + 1) + ") " + orderList.get(i));   // + " " + ((Salad) orderList.get(i)).size
+                            }
+                        }
+
+                        changePick = scrChoice.nextInt();
+                        System.out.println("You are changing the " + orderList.get(changePick - 1));
                     }
 
-                    if(list.contentEquals("Change Order")){
-                        //Loop through the current order list
-                       if(aRPick == 0) {
-                           nl();
-                           printStar();
-                           nl();
-                           print("Which one would you like to change?");
-                           for (int i = 0; i < orderList.size(); i++) {
-                               if (orderList.get(i).itemType.contentEquals("Salad")) {
-                                   System.out.println("(" + (i + 1) + ") " + orderList.get(i));   // + " " + ((Salad) orderList.get(i)).size
-                               }
-                           }
-                       }
+                    if (orderList.get(changePick - 1).itemType.contentEquals("Salad") || changeSalad != null) {
 
-                        if(changeSalad != null) {
-                            //REMOVE
-                            if(aRPick == 2) {
+
+                        int addOrRemove = 0;
+                        if(aRPick == 0) {
+                            coSalad = (Salad) orderList.get(changePick - 1);
+                            nl();
+                            printStar();
+                            nl();
+                            print("The Salad contains: ");
+                            for (int i = 0; i < coSalad.contain.size(); i++) {
+                                System.out.println(coSalad.contain.get(i));
+                            }
+                            nl();
+                            printStar();
+                            nl();print("What would you like to Add or Remove from the " + coSalad + " (1)[Add] (2)[Remove]");
+                            addOrRemove = scrChoice.nextInt();
+                        }
+
+                        if (addOrRemove == 1 || aRPick == 1) {
+                            //ADD
+                            print("Here are a list you can add to the Salad");
+                            displaySaladOptions();
+                            int addPick = scrChoice.nextInt();
+
+                            if(addPick == 1){
+                                if(aRPick != 0){
+                                    changeSalad.contain.add("N Shredded Cheese");
+                                }else{
+                                    coSalad.contain.add("N Shredded Cheese");
+                                }
+
                                 nl();
                                 printStar();
                                 nl();
-                                print("What would you like to remove?");
-                                for (int i = 0; i < changeSalad.contain.size(); i++) {
-                                    System.out.println("(" + (i + 1) + ") " + changeSalad.contain.get(i));
-                                }
-                                int removeIndex = scrChoice.nextInt();
-                                System.out.println(removeIndex);
-                                System.out.println(changeSalad.contain.size());
-                                if (!(removeIndex > changeSalad.contain.size())) {
-                                    nl();
-                                    printStar();
-                                    nl();
-                                    print("You removed: " + changeSalad.contain.get(removeIndex - 1));
-                                    changeSalad.contain.remove(removeIndex - 1);
-                                    nl();
-                                    printStar();
-                                    nl();
-                                    print("The Salad now contains: ");
+                                System.out.println("You added: Shredded Cheese");
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Salad now contains: ");
+                                if(aRPick != 0){
                                     for (int i = 0; i < changeSalad.contain.size(); i++) {
-                                    System.out.println(changeSalad.contain.get(i));
-                                    }
-
-                                    displayChoiceRemove();
-                                    int removePick = scrChoice.nextInt();
-
-                                    if (removePick == 1) {
-                                        //Allow them to Remove the current item again
-                                        changeSalad = changeSalad;
-                                        aRPick = 1;
-                                    } else if (removePick == 2) {
-                                        //Bring them to the Add menu for the item
-                                        changeSalad = changeSalad;
-                                        aRPick = 1;
-                                    } else if (removePick == 3) {
-                                        //return to the main menu
-                                        list = "Choice";
-                                        displayListOther();
-                                        list = listChoiceOther();
-                                        changeSalad = null;
-                                        aRPick = 0;
-                                    } else {
-                                        //Show an error and reset
-                                        list = displayError(orderList);
-                                        changeSalad = null;
-                                        aRPick = 0;
+                                        System.out.println(changeSalad.contain.get(i));
                                     }
                                 }else{
+                                    for (int i = 0; i < coSalad.contain.size(); i++) {
+                                        System.out.println(coSalad.contain.get(i));
+                                    }
+                                }
+
+                                displayChoiceAdd();
+                                addPick = scrChoice.nextInt();
+
+                                if (addPick == 1) {
+                                    //Allow them to add the current item again
+                                    changeSalad = coSalad;
+                                    aRPick = 1;
+                                } else if (addPick == 2) {
+                                    //Bring them to the Remove menu for the item
+                                    changeSalad = coSalad;
+                                    aRPick = 2;
+                                } else if (addPick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                } else {
                                     //Show an error and reset
                                     list = displayError(orderList);
                                     changeSalad = null;
                                     aRPick = 0;
                                 }
-                            }else if(aRPick == 1) {
-                                //ADD
-                                    nl();
-                                    printStar();
-                                    nl();
-                                    print("Here are a list you can add to the Salad");
-                                    displaySaladOptions();
-                                    int addPick = scrChoice.nextInt();
 
-                                    if(addPick == 1){
-                                        changeSalad.contain.add("N Shredded Cheese");
-                                        nl();
-                                        printStar();
-                                        nl();
-                                        System.out.println("You added: Shredded Cheese");
+                            }else if(addPick == 2){
+                                if(aRPick != 0){
+                                    changeSalad.contain.add("N Diced Tomatos");
+                                }else{
+                                    coSalad.contain.add("N Diced Tomatos");
+                                }
 
-                                        nl();
-                                        printStar();
-                                        nl();
-                                        print("The Salad now contains: ");
-                                        for (int i = 0; i < changeSalad.contain.size(); i++) {
-                                        System.out.println(changeSalad.contain.get(i));
-                                        }
-
-                                        displayChoiceAdd();
-                                        addPick = scrChoice.nextInt();
-
-                                        if (addPick == 1) {
-                                            //Allow them to add the current item again
-                                            changeSalad = changeSalad;
-                                            aRPick = 1;
-                                        } else if (addPick == 2) {
-                                            //Bring them to the Remove menu for the item
-                                            changeSalad = changeSalad;
-                                            aRPick = 2;
-                                        } else if (addPick == 3) {
-                                            //return to the main menu
-                                            list = "Choice";
-                                            displayListOther();
-                                            list = listChoiceOther();
-                                            changeSalad = null;
-                                            aRPick = 0;
-                                        } else {
-                                            //Show an error and reset
-                                            list = displayError(orderList);
-                                            changeSalad = null;
-                                            aRPick = 0;
-                                        }
-
-                                    }else if(addPick == 2){
-                                        changeSalad.contain.add("N Diced Tomatos");
-                                        nl();
-                                        printStar();
-                                        nl();
-                                        System.out.println("You added: Diced Tomatos");
-
-                                        nl();
-                                        printStar();
-                                        nl();
-                                        print("The Salad now contains: ");
-                                        for (int i = 0; i < changeSalad.contain.size(); i++) {
-                                        System.out.println(changeSalad.contain.get(i));
-                                        }
-
-                                        displayChoiceAdd();
-                                        addPick = scrChoice.nextInt();
-
-                                        if (addPick == 1) {
-                                            //Allow them to add the current item again
-                                            changeSalad = changeSalad;
-                                            aRPick = 1;
-                                        } else if (addPick == 2) {
-                                            //Bring them to the Remove menu for the item
-                                            changeSalad = changeSalad;
-                                            aRPick = 2;
-                                        } else if (addPick == 3) {
-                                            //return to the main menu
-                                            list = "Choice";
-                                            displayListOther();
-                                            list = listChoiceOther();
-                                            changeSalad = null;
-                                            aRPick = 0;
-                                        } else {
-                                            //Show an error and reset
-                                            list = displayError(orderList);
-                                            changeSalad = null;
-                                            aRPick = 0;
-                                        }
-
-                                    }else if(addPick == 3){
-                                        changeSalad.contain.add("N Asiago Cheese");
-                                        nl();
-                                        printStar();
-                                        nl();
-                                        System.out.println("You added: Asiago Cheese");
-
-                                        nl();
-                                        printStar();
-                                        nl();
-                                        print("The Salad now contains: ");
-                                        for (int i = 0; i < changeSalad.contain.size(); i++) {
-                                        System.out.println(changeSalad.contain.get(i));
-                                        }
-
-                                        displayChoiceAdd();
-                                        addPick = scrChoice.nextInt();
-
-                                        if (addPick == 1) {
-                                            //Allow them to add the current item again
-                                            changeSalad = changeSalad;
-                                            aRPick = 1;
-                                        } else if (addPick == 2) {
-                                            //Bring them to the Remove menu for the item
-                                            changeSalad = changeSalad;
-                                            aRPick = 2;
-                                        } else if (addPick == 3) {
-                                            //return to the main menu
-                                            list = "Choice";
-                                            displayListOther();
-                                            list = listChoiceOther();
-                                            changeSalad = null;
-                                            aRPick = 0;
-                                        } else {
-                                            //Show an error and reset
-                                            list = displayError(orderList);
-                                            changeSalad = null;
-                                            aRPick = 0;
-                                        }
-
-                                    }else if(addPick == 4){
-                                        changeSalad.contain.add("N 3 Pieces of Bacon");
-                                        nl();
-                                        printStar();
-                                        nl();
-                                        System.out.println("You added: 3 Pieces of Bacon");
-
-                                        nl();
-                                        printStar();
-                                        nl();
-                                        print("The Salad now contains: ");
-                                        for (int i = 0; i < changeSalad.contain.size(); i++) {
-                                        System.out.println(changeSalad.contain.get(i));
-                                        }
-
-                                        displayChoiceAdd();
-                                        addPick = scrChoice.nextInt();
-
-                                        if (addPick == 1) {
-                                            //Allow them to add the current item again
-                                            changeSalad = changeSalad;
-                                            aRPick = 1;
-                                        } else if (addPick == 2) {
-                                            //Bring them to the Remove menu for the item
-                                            changeSalad = changeSalad;
-                                            aRPick = 2;
-                                        } else if (addPick == 3) {
-                                            //return to the main menu
-                                            list = "Choice";
-                                            displayListOther();
-                                            list = listChoiceOther();
-                                            changeSalad = null;
-                                            aRPick = 0;
-                                        } else {
-                                            //Show an error and reset
-                                            list = displayError(orderList);
-                                            changeSalad = null;
-                                            aRPick = 0;
-                                        }
-
-                                    }else if(addPick == 5){
-                                        changeSalad.contain.add("N Bacon bits");
-                                        nl();
-                                        printStar();
-                                        nl();
-                                        System.out.println("You added: Bacon bits");
-
-                                        nl();
-                                        printStar();
-                                        nl();
-                                        print("The Salad now contains: ");
-                                        for (int i = 0; i < changeSalad.contain.size(); i++) {
-                                        System.out.println(changeSalad.contain.get(i));
-                                        }
-
-                                        displayChoiceAdd();
-                                        addPick = scrChoice.nextInt();
-
-                                        if (addPick == 1) {
-                                            //Allow them to add the current item again
-                                            changeSalad = changeSalad;
-                                            aRPick = 1;
-                                        } else if (addPick == 2) {
-                                            //Bring them to the Remove menu for the item
-                                            changeSalad = changeSalad;
-                                            aRPick = 2;
-                                        } else if (addPick == 3) {
-                                            //return to the main menu
-                                            list = "Choice";
-                                            displayListOther();
-                                            list = listChoiceOther();
-                                            changeSalad = null;
-                                            aRPick = 0;
-                                        } else {
-                                            //Show an error and reset
-                                            list = displayError(orderList);
-                                            changeSalad = null;
-                                            aRPick = 0;
-                                        }
-
-                                    }else{
-                                        //Show an error and reset
-                                        list = displayError(orderList);
-                                        changeSalad = null;
-                                    }
-                            }
-
-                        }else {
-
-                            int changePick = scrChoice.nextInt();
-                            System.out.println("You are changing the " + orderList.get(changePick - 1));
-
-                            if (orderList.get(changePick - 1).itemType.contentEquals("Salad")) {
-                                Salad coSalad = (Salad) orderList.get(changePick - 1);
                                 nl();
                                 printStar();
                                 nl();
-                                print("The Salad contains: ");
+                                System.out.println("You added: Diced Tomatos");
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Salad now contains: ");
+                                if(aRPick != 0){
+                                    for (int i = 0; i < changeSalad.contain.size(); i++) {
+                                        System.out.println(changeSalad.contain.get(i));
+                                    }
+                                }else{
+                                    for (int i = 0; i < coSalad.contain.size(); i++) {
+                                        System.out.println(coSalad.contain.get(i));
+                                    }
+                                }
+
+                                displayChoiceAdd();
+                                addPick = scrChoice.nextInt();
+
+                                if (addPick == 1) {
+                                    //Allow them to add the current item again
+                                    changeSalad = coSalad;
+                                    aRPick = 1;
+                                } else if (addPick == 2) {
+                                    //Bring them to the Remove menu for the item
+                                    changeSalad = coSalad;
+                                    aRPick = 2;
+                                } else if (addPick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                }
+
+                            }else if(addPick == 4){
+                                if(aRPick != 0){
+                                    changeSalad.contain.add("N 3 Pieces of Bacon");
+                                }else{
+                                    coSalad.contain.add("N 3 Pieces of Bacon");
+                                }
+
+                                nl();
+                                printStar();
+                                nl();
+                                System.out.println("You added: 3 Pieces of Bacon");
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Salad now contains: ");
+                                if(aRPick != 0){
+                                    for (int i = 0; i < changeSalad.contain.size(); i++) {
+                                        System.out.println(changeSalad.contain.get(i));
+                                    }
+                                }else{
+                                    for (int i = 0; i < coSalad.contain.size(); i++) {
+                                        System.out.println(coSalad.contain.get(i));
+                                    }
+                                }
+
+                                displayChoiceAdd();
+                                addPick = scrChoice.nextInt();
+
+                                if (addPick == 1) {
+                                    //Allow them to add the current item again
+                                    changeSalad = coSalad;
+                                    aRPick = 1;
+                                } else if (addPick == 2) {
+                                    //Bring them to the Remove menu for the item
+                                    changeSalad = coSalad;
+                                    aRPick = 2;
+                                } else if (addPick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                }
+
+                            }else if(addPick == 5){
+                                if(aRPick != 0){
+                                    changeSalad.contain.add("N Bacon Bits");
+                                }else{
+                                    coSalad.contain.add("N Bacon Bits");
+                                }
+
+                                nl();
+                                printStar();
+                                nl();
+                                System.out.println("You added: Bacon Bits");
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Salad now contains: ");
+                                if(aRPick != 0){
+                                    for (int i = 0; i < changeSalad.contain.size(); i++) {
+                                        System.out.println(changeSalad.contain.get(i));
+                                    }
+                                }else{
+                                    for (int i = 0; i < coSalad.contain.size(); i++) {
+                                        System.out.println(coSalad.contain.get(i));
+                                    }
+                                }
+
+                                displayChoiceAdd();
+                                addPick = scrChoice.nextInt();
+
+                                if (addPick == 1) {
+                                    //Allow them to add the current item again
+                                    changeSalad = coSalad;
+                                    aRPick = 1;
+                                } else if (addPick == 2) {
+                                    //Bring them to the Remove menu for the item
+                                    changeSalad = coSalad;
+                                    aRPick = 2;
+                                } else if (addPick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                }
+
+                            }else{
+                                //Show an error and reset
+                                list = displayError(orderList);
+                                changeSalad = null;
+                                aRPick = 0;
+                            }
+
+                        } else if (addOrRemove == 2 || aRPick == 2){
+                            //REMOVE
+                            print("What would you like to remove?");
+                            if(aRPick == 0) {
+                                for (int i = 0; i < coSalad.contain.size(); i++) {
+                                    System.out.println("(" + (i + 1) + ") " + coSalad.contain.get(i));
+                                }
+                            }else{
+                                for (int i = 0; i < changeSalad.contain.size(); i++) {
+                                    System.out.println("(" + (i + 1) + ") " + changeSalad.contain.get(i));
+                                }
+                            }
+
+                            int removeIndex = scrChoice.nextInt();
+                            removeIndex -= 1;
+
+                            if (!(removeIndex > coSalad.contain.size()) && aRPick == 0) {
+                                print("You removed: " + coSalad.contain.get(removeIndex));
+                                coSalad.contain.remove(removeIndex);
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Salad now contains: ");
+
                                 for (int i = 0; i < coSalad.contain.size(); i++) {
                                     System.out.println(coSalad.contain.get(i));
                                 }
+
+                                displayChoiceRemove();
+                                int removePick = scrChoice.nextInt();
+
+                                if (removePick == 1) {
+                                    //Allow them to remove the current item again
+                                    changeSalad = coSalad;
+                                    aRPick = 2;
+                                } else if (removePick == 2) {
+                                    //Bring them to the Add menu for the item
+                                    changeSalad = coSalad;
+                                    aRPick = 1;
+                                } else if (removePick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                } else {
+                                    //show an error
+                                    list = displayError(orderList);
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                }
+                            }else if(!(removeIndex > coSalad.contain.size()) && aRPick > 0){
+                                print("You removed: " + coSalad.contain.get(removeIndex));
+                                coSalad.contain.remove(removeIndex);
+
                                 nl();
                                 printStar();
                                 nl();
-                                print("What would you like to Add or Remove from the " + coSalad + " (1)[Add] (2)[Remove]");
-                                int addOrRemove = scrChoice.nextInt();
+                                print("The Salad now contains: ");
 
-                                if (addOrRemove == 1) {
-                                    //ADD
-                                    print("Here are a list you can add to the Salad");
-                                    displaySaladOptions();
-                                    int addPick = scrChoice.nextInt();
-
-                                    if(addPick == 1){
-                                        coSalad.contain.add("N Shredded Cheese");
-                                        nl();
-                                        printStar();
-                                        nl();
-                                        System.out.println("You added: Shredded Cheese");
-
-                                        nl();
-                                        printStar();
-                                        nl();
-                                        print("The Salad now contains: ");
-                                        for (int i = 0; i < coSalad.contain.size(); i++) {
-                                        System.out.println(coSalad.contain.get(i));
-                                        }
-
-                                        displayChoiceAdd();
-                                        addPick = scrChoice.nextInt();
-
-                                        if (addPick == 1) {
-                                            //Allow them to add the current item again
-                                            changeSalad = coSalad;
-                                            aRPick = 1;
-                                        } else if (addPick == 2) {
-                                            //Bring them to the Remove menu for the item
-                                            changeSalad = coSalad;
-                                            aRPick = 2;
-                                        } else if (addPick == 3) {
-                                            //return to the main menu
-                                            list = "Choice";
-                                            displayListOther();
-                                            list = listChoiceOther();
-                                            changeSalad = null;
-                                            aRPick = 0;
-                                        } else {
-                                            //Show an error and reset
-                                            list = displayError(orderList);
-                                            changeSalad = null;
-                                            aRPick = 0;
-                                        }
-
-                                    }else if(addPick == 2){
-                                        coSalad.contain.add("N Diced Tomatos");
-                                        nl();
-                                        printStar();
-                                        nl();
-                                        System.out.println("You added: Diced Tomatos");
-
-                                        nl();
-                                        printStar();
-                                        nl();
-                                        print("The Salad now contains: ");
-                                        for (int i = 0; i < coSalad.contain.size(); i++) {
-                                        System.out.println(coSalad.contain.get(i));
-                                        }
-
-                                        displayChoiceAdd();
-                                        addPick = scrChoice.nextInt();
-
-                                        if (addPick == 1) {
-                                            //Allow them to add the current item again
-                                            changeSalad = coSalad;
-                                            aRPick = 1;
-                                        } else if (addPick == 2) {
-                                            //Bring them to the Remove menu for the item
-                                            changeSalad = coSalad;
-                                            aRPick = 2;
-                                        } else if (addPick == 3) {
-                                            //return to the main menu
-                                            list = "Choice";
-                                            displayListOther();
-                                            list = listChoiceOther();
-                                            changeSalad = null;
-                                            aRPick = 0;
-                                        } else {
-                                            //Show an error and reset
-                                            list = displayError(orderList);
-                                            changeSalad = null;
-                                            aRPick = 0;
-                                        }
-
-                                    }else if(addPick == 3){
-                                        coSalad.contain.add("N Asiago Cheese");
-                                        nl();
-                                        printStar();
-                                        nl();
-                                        System.out.println("You added: Asiago Cheese");
-
-                                        nl();
-                                        printStar();
-                                        nl();
-                                        print("The Salad now contains: ");
-                                        for (int i = 0; i < coSalad.contain.size(); i++) {
-                                        System.out.println(coSalad.contain.get(i));
-                                        }
-
-                                        displayChoiceAdd();
-                                        addPick = scrChoice.nextInt();
-
-                                        if (addPick == 1) {
-                                            //Allow them to add the current item again
-                                            changeSalad = coSalad;
-                                            aRPick = 1;
-                                        } else if (addPick == 2) {
-                                            //Bring them to the Remove menu for the item
-                                            changeSalad = coSalad;
-                                            aRPick = 2;
-                                        } else if (addPick == 3) {
-                                            //return to the main menu
-                                            list = "Choice";
-                                            displayListOther();
-                                            list = listChoiceOther();
-                                            changeSalad = null;
-                                            aRPick = 0;
-                                        } else {
-                                            //Show an error and reset
-                                            list = displayError(orderList);
-                                            changeSalad = null;
-                                            aRPick = 0;
-                                        }
-
-                                    }else if(addPick == 4){
-                                        coSalad.contain.add("N 3 Pieces of Bacon");
-                                        nl();
-                                        printStar();
-                                        nl();
-                                        System.out.println("You added: 3 Pieces of Bacon");
-
-                                        nl();
-                                        printStar();
-                                        nl();
-                                        print("The Salad now contains: ");
-                                        for (int i = 0; i < coSalad.contain.size(); i++) {
-                                        System.out.println(coSalad.contain.get(i));
-                                        }
-
-                                        displayChoiceAdd();
-                                        addPick = scrChoice.nextInt();
-
-                                        if (addPick == 1) {
-                                            //Allow them to add the current item again
-                                            changeSalad = coSalad;
-                                            aRPick = 1;
-                                        } else if (addPick == 2) {
-                                            //Bring them to the Remove menu for the item
-                                            changeSalad = coSalad;
-                                            aRPick = 2;
-                                        } else if (addPick == 3) {
-                                            //return to the main menu
-                                            list = "Choice";
-                                            displayListOther();
-                                            list = listChoiceOther();
-                                            changeSalad = null;
-                                            aRPick = 0;
-                                        } else {
-                                            //Show an error and reset
-                                            list = displayError(orderList);
-                                            changeSalad = null;
-                                            aRPick = 0;
-                                        }
-
-                                    }else if(addPick == 5){
-                                        coSalad.contain.add("N Bacon bits");
-                                        nl();
-                                        printStar();
-                                        nl();
-                                        System.out.println("You added: Bacon bits");
-
-                                        nl();
-                                        printStar();
-                                        nl();
-                                        print("The Salad now contains: ");
-                                        for (int i = 0; i < coSalad.contain.size(); i++) {
-                                        System.out.println(coSalad.contain.get(i));
-                                        }
-
-                                        displayChoiceAdd();
-                                        addPick = scrChoice.nextInt();
-
-                                        if (addPick == 1) {
-                                            //Allow them to add the current item again
-                                            changeSalad = coSalad;
-                                            aRPick = 1;
-                                        } else if (addPick == 2) {
-                                            //Bring them to the Remove menu for the item
-                                            changeSalad = coSalad;
-                                            aRPick = 2;
-                                        } else if (addPick == 3) {
-                                            //return to the main menu
-                                            list = "Choice";
-                                            displayListOther();
-                                            list = listChoiceOther();
-                                            changeSalad = null;
-                                            aRPick = 0;
-                                        } else {
-                                            //Show an error and reset
-                                            list = displayError(orderList);
-                                            changeSalad = null;
-                                            aRPick = 0;
-                                        }
-
-                                    }else{
-                                        //Show an error and reset
-                                        list = displayError(orderList);
-                                        changeSalad = null;
-                                        aRPick = 0;
-                                    }
-
-                                } else {
-                                    //REMOVE
-                                    print("What would you like to remove?");
-                                    for (int i = 0; i < coSalad.contain.size(); i++) {
-                                        System.out.println("(" + (i + 1) + ") " + coSalad.contain.get(i));
-                                    }
-                                    int removeIndex = scrChoice.nextInt();
-                                    removeIndex -= 1;
-
-                                    if (!(removeIndex > coSalad.contain.size())) {
-                                        print("You removed: " + coSalad.contain.get(removeIndex - 1));
-                                        coSalad.contain.remove(removeIndex - 1);
-
-                                        nl();
-                                        printStar();
-                                        nl();
-                                        print("The Salad now contains: ");
-
-                                        for (int i = 0; i < coSalad.contain.size(); i++) {
-                                            System.out.println(coSalad.contain.get(i));
-                                        }
-
-                                        displayChoiceRemove();
-                                        int removePick = scrChoice.nextInt();
-
-                                        if (removePick == 1) {
-                                            //Allow them to remove the current item again
-                                            changeSalad = coSalad;
-                                            aRPick = 2;
-                                        } else if (removePick == 2) {
-                                            //Bring them to the Add menu for the item
-                                            changeSalad = coSalad;
-                                            aRPick = 1;
-                                        } else if (removePick == 3) {
-                                            //return to the main menu
-                                            list = "Choice";
-                                            displayListOther();
-                                            list = listChoiceOther();
-                                            changeSalad = null;
-                                            aRPick = 0;
-                                        } else {
-                                            //show an error
-                                            list = displayError(orderList);
-                                            changeSalad = null;
-                                            aRPick = 0;
-                                        }
-                                    }else{
-                                        //Show an error and reset
-                                        list = displayError(orderList);
-                                        changeSalad = null;
-                                        aRPick = 0;
-                                    }
+                                for (int i = 0; i < changeSalad.contain.size(); i++) {
+                                    System.out.println(changeSalad.contain.get(i));
                                 }
+
+                                displayChoiceRemove();
+                                int removePick = scrChoice.nextInt();
+
+                                if (removePick == 1) {
+                                    //Allow them to remove the current item again
+                                    changeSalad = coSalad;
+                                    aRPick = 2;
+                                } else if (removePick == 2) {
+                                    //Bring them to the Add menu for the item
+                                    changeSalad = coSalad;
+                                    aRPick = 1;
+                                } else if (removePick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                } else {
+                                    //show an error
+                                    list = displayError(orderList);
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                }
+                            }else {
+                                //Show an error and reset
+                                list = displayError(orderList);
+                                changeSalad = null;
+                                aRPick = 0;
                             }
                         }
                     }
+                }
+
+
 
                     //Checken Order list
                     if (list.contentEquals("Chicken") || list.contentEquals("ChickenSkip")) {
