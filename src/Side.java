@@ -1,21 +1,20 @@
 import java.util.ArrayList;
 
 public class Side extends Order {
-    String nameType;
     String size;
 
     ArrayList<String> contain = new ArrayList<String>();
 
     public Side(String nameType, String size, String itemType){
-        super(itemType);
-        this.nameType = nameType;
+        super(itemType, nameType);
         this.size = size;
+        canBeChanged = true;
         sideList();
     }
 
     public Side(String nameType, String itemType){
-        super(itemType);
-        this.nameType = nameType;
+        super(itemType, nameType);
+        canBeChanged = true;
         sideList();
     }
 

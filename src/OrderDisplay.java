@@ -9,13 +9,22 @@ public class OrderDisplay {
         Scanner scrChoice = new Scanner(System.in);
         Scanner scrChoiceStr = new Scanner(System.in);
         String list = "";
-        int total = 0;
+        double total = 0;
         ArrayList<Order> orderList = new ArrayList<>();
         String lastBurger = "0";
         String lastChicken = "0";
         String lastSalad = "0";
         String lastSide = "0";
         String lastDrink = "0";
+
+        //Change Holders
+        Burger changeBurger = null;
+        Chicken changeChicken = null;
+        Salad coSalad = null;
+        Salad changeSalad = null;
+        Drink chanageDrink = null;
+        Side changeSide = null;
+        int aRPick = 0; // 1 for Add, 2 for Remove, 0 for null
 
 
         while (order) {
@@ -49,7 +58,7 @@ public class OrderDisplay {
                     startingOrder = false;
                 }else if(choice == 5){
                     //Display the Drink list
-                    displayDrink();
+                    displaySideDrink();
                     list = "Drink";
                     startingOrder = false;
                 }else if(choice == 6){
@@ -66,64 +75,382 @@ public class OrderDisplay {
                 }
 
             }else{
-                //When we are on the Hamburger list
-                if(list.contentEquals("Choice")) {
 
-                    int choice = scrChoice.nextInt();
-                    if (choice == 1) {
-                        //Display Hamburger list
-                        displayHamburger();
-                        list = "Hamburger";
-                    } else if (choice == 2){
-                        //Display Chicken list
-                        displayChicken();
-                        list = "Chicken";
-                    }else if(choice == 3){
-                        //Display Salad list
-                        displaySalad();
-                        list = "Salad";
-                    }else if(choice == 4){
-                        //Display Side list
-                        displaySide();
-                        list = "Side";
-                    }else if(choice == 5){
-                        //Display the Drink list
-                        displayDrink();
-                        list = "Drink";
-                    }else if(choice == 6){
-                        //Display ETC list
-                        //displaySalad();
-                        list = "ETC";
-                    }else if(choice == 7){
-                        //Display Salad list
-                        //displaySalad();
-                        if(!orderList.isEmpty()){
-                            list = "Change Order";
-                        }else{
-                            print("Error: Order is Empty");
-                            nl();
-                            printStar();
-                            nl();
-                        }
-                    }else{
-                        //Display an error if a nonvalid choice is picked
-                        print("Error: Invaild Choice");
+                if(list.contentEquals("Order End")){
+                    print("Thanks for ordering at Wendy's!");
+                    print("Your order is: ");
+                    displayOrder(orderList);
+                    total = getOrderPrice(orderList);
+                    System.out.println("Your total is: $" + total);
+                    print("Come back again!!");
+                    order = false;
+                }
+
+                if(list.contentEquals("Change Order")){
+                    //Loop through the current order list
+                    int changePick = 1;
+                    if(aRPick == 0) {
                         nl();
                         printStar();
                         nl();
+                        print("Which one would you like to change?");
+                        for (int i = 0; i < orderList.size(); i++) {
+                            if (orderList.get(i).itemType.contentEquals("Salad")) {
+                                System.out.println("(" + (i + 1) + ") " + orderList.get(i));   // + " " + ((Salad) orderList.get(i)).size
+                            }
+                        }
+
+                        changePick = scrChoice.nextInt();
+                        System.out.println("You are changing the " + orderList.get(changePick - 1));
+                    }
+
+                    if (orderList.get(changePick - 1).itemType.contentEquals("Salad") || changeSalad != null) {
+
+
+                        int addOrRemove = 0;
+                        if(aRPick == 0) {
+                            coSalad = (Salad) orderList.get(changePick - 1);
+                            nl();
+                            printStar();
+                            nl();
+                            print("The Salad contains: ");
+                            for (int i = 0; i < coSalad.contain.size(); i++) {
+                                System.out.println(coSalad.contain.get(i));
+                            }
+                            nl();
+                            printStar();
+                            nl();print("What would you like to Add or Remove from the " + coSalad + " (1)[Add] (2)[Remove]");
+                            addOrRemove = scrChoice.nextInt();
+                        }
+
+                        if (addOrRemove == 1 || aRPick == 1) {
+                            //ADD
+                            print("Here are a list you can add to the Salad");
+                            displaySaladOptions();
+                            int addPick = scrChoice.nextInt();
+
+                            if(addPick == 1){
+                                if(aRPick != 0){
+                                    changeSalad.contain.add("N Shredded Cheese");
+                                }else{
+                                    coSalad.contain.add("N Shredded Cheese");
+                                }
+
+                                nl();
+                                printStar();
+                                nl();
+                                System.out.println("You added: Shredded Cheese");
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Salad now contains: ");
+                                if(aRPick != 0){
+                                    for (int i = 0; i < changeSalad.contain.size(); i++) {
+                                        System.out.println(changeSalad.contain.get(i));
+                                    }
+                                }else{
+                                    for (int i = 0; i < coSalad.contain.size(); i++) {
+                                        System.out.println(coSalad.contain.get(i));
+                                    }
+                                }
+
+                                displayChoiceAdd();
+                                addPick = scrChoice.nextInt();
+
+                                if (addPick == 1) {
+                                    //Allow them to add the current item again
+                                    changeSalad = coSalad;
+                                    aRPick = 1;
+                                } else if (addPick == 2) {
+                                    //Bring them to the Remove menu for the item
+                                    changeSalad = coSalad;
+                                    aRPick = 2;
+                                } else if (addPick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                }
+
+                            }else if(addPick == 2){
+                                if(aRPick != 0){
+                                    changeSalad.contain.add("N Diced Tomatos");
+                                }else{
+                                    coSalad.contain.add("N Diced Tomatos");
+                                }
+
+                                nl();
+                                printStar();
+                                nl();
+                                System.out.println("You added: Diced Tomatos");
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Salad now contains: ");
+                                if(aRPick != 0){
+                                    for (int i = 0; i < changeSalad.contain.size(); i++) {
+                                        System.out.println(changeSalad.contain.get(i));
+                                    }
+                                }else{
+                                    for (int i = 0; i < coSalad.contain.size(); i++) {
+                                        System.out.println(coSalad.contain.get(i));
+                                    }
+                                }
+
+                                displayChoiceAdd();
+                                addPick = scrChoice.nextInt();
+
+                                if (addPick == 1) {
+                                    //Allow them to add the current item again
+                                    changeSalad = coSalad;
+                                    aRPick = 1;
+                                } else if (addPick == 2) {
+                                    //Bring them to the Remove menu for the item
+                                    changeSalad = coSalad;
+                                    aRPick = 2;
+                                } else if (addPick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                }
+
+                            }else if(addPick == 4){
+                                if(aRPick != 0){
+                                    changeSalad.contain.add("N 3 Pieces of Bacon");
+                                }else{
+                                    coSalad.contain.add("N 3 Pieces of Bacon");
+                                }
+
+                                nl();
+                                printStar();
+                                nl();
+                                System.out.println("You added: 3 Pieces of Bacon");
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Salad now contains: ");
+                                if(aRPick != 0){
+                                    for (int i = 0; i < changeSalad.contain.size(); i++) {
+                                        System.out.println(changeSalad.contain.get(i));
+                                    }
+                                }else{
+                                    for (int i = 0; i < coSalad.contain.size(); i++) {
+                                        System.out.println(coSalad.contain.get(i));
+                                    }
+                                }
+
+                                displayChoiceAdd();
+                                addPick = scrChoice.nextInt();
+
+                                if (addPick == 1) {
+                                    //Allow them to add the current item again
+                                    changeSalad = coSalad;
+                                    aRPick = 1;
+                                } else if (addPick == 2) {
+                                    //Bring them to the Remove menu for the item
+                                    changeSalad = coSalad;
+                                    aRPick = 2;
+                                } else if (addPick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                }
+
+                            }else if(addPick == 5){
+                                if(aRPick != 0){
+                                    changeSalad.contain.add("N Bacon Bits");
+                                }else{
+                                    coSalad.contain.add("N Bacon Bits");
+                                }
+
+                                nl();
+                                printStar();
+                                nl();
+                                System.out.println("You added: Bacon Bits");
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Salad now contains: ");
+                                if(aRPick != 0){
+                                    for (int i = 0; i < changeSalad.contain.size(); i++) {
+                                        System.out.println(changeSalad.contain.get(i));
+                                    }
+                                }else{
+                                    for (int i = 0; i < coSalad.contain.size(); i++) {
+                                        System.out.println(coSalad.contain.get(i));
+                                    }
+                                }
+
+                                displayChoiceAdd();
+                                addPick = scrChoice.nextInt();
+
+                                if (addPick == 1) {
+                                    //Allow them to add the current item again
+                                    changeSalad = coSalad;
+                                    aRPick = 1;
+                                } else if (addPick == 2) {
+                                    //Bring them to the Remove menu for the item
+                                    changeSalad = coSalad;
+                                    aRPick = 2;
+                                } else if (addPick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                }
+
+                            }else{
+                                //Show an error and reset
+                                list = displayError(orderList);
+                                changeSalad = null;
+                                aRPick = 0;
+                            }
+
+                        } else if (addOrRemove == 2 || aRPick == 2){
+                            //REMOVE
+                            print("What would you like to remove?");
+                            if(aRPick == 0) {
+                                for (int i = 0; i < coSalad.contain.size(); i++) {
+                                    System.out.println("(" + (i + 1) + ") " + coSalad.contain.get(i));
+                                }
+                            }else{
+                                for (int i = 0; i < changeSalad.contain.size(); i++) {
+                                    System.out.println("(" + (i + 1) + ") " + changeSalad.contain.get(i));
+                                }
+                            }
+
+                            int removeIndex = scrChoice.nextInt();
+                            removeIndex -= 1;
+
+                            if (!(removeIndex > coSalad.contain.size()) && aRPick == 0) {
+                                print("You removed: " + coSalad.contain.get(removeIndex));
+                                coSalad.contain.remove(removeIndex);
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Salad now contains: ");
+
+                                for (int i = 0; i < coSalad.contain.size(); i++) {
+                                    System.out.println(coSalad.contain.get(i));
+                                }
+
+                                displayChoiceRemove();
+                                int removePick = scrChoice.nextInt();
+
+                                if (removePick == 1) {
+                                    //Allow them to remove the current item again
+                                    changeSalad = coSalad;
+                                    aRPick = 2;
+                                } else if (removePick == 2) {
+                                    //Bring them to the Add menu for the item
+                                    changeSalad = coSalad;
+                                    aRPick = 1;
+                                } else if (removePick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                } else {
+                                    //show an error
+                                    list = displayError(orderList);
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                }
+                            }else if(!(removeIndex > coSalad.contain.size()) && aRPick > 0){
+                                print("You removed: " + coSalad.contain.get(removeIndex));
+                                coSalad.contain.remove(removeIndex);
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Salad now contains: ");
+
+                                for (int i = 0; i < changeSalad.contain.size(); i++) {
+                                    System.out.println(changeSalad.contain.get(i));
+                                }
+
+                                displayChoiceRemove();
+                                int removePick = scrChoice.nextInt();
+
+                                if (removePick == 1) {
+                                    //Allow them to remove the current item again
+                                    changeSalad = coSalad;
+                                    aRPick = 2;
+                                } else if (removePick == 2) {
+                                    //Bring them to the Add menu for the item
+                                    changeSalad = coSalad;
+                                    aRPick = 1;
+                                } else if (removePick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                } else {
+                                    //show an error
+                                    list = displayError(orderList);
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                }
+                            }else {
+                                //Show an error and reset
+                                list = displayError(orderList);
+                                changeSalad = null;
+                                aRPick = 0;
+                            }
+                        }
                     }
                 }
 
+
+
                     //Checken Order list
                     if (list.contentEquals("Chicken") || list.contentEquals("ChickenSkip")) {
-                        //When the user picks one of them
+                        //When the user picks one of themn
                         String chickenChoice;
                         if(!list.contentEquals("ChickenSkip")){
                              chickenChoice = scrChoiceStr.nextLine();
                         }else{
                              chickenChoice = lastChicken;
                         }
-
 
                         switch (chickenChoice) {
                             case "1":
@@ -135,10 +462,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -169,10 +496,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -201,10 +528,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -233,10 +560,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -265,10 +592,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -297,10 +624,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -331,10 +658,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -367,10 +694,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -401,11 +728,11 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
-                                        };
+                                            list = listChoice();
+                                        }
                                         break;
                                     }
                                     orderList.add(CC9);
@@ -435,10 +762,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -470,10 +797,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -502,10 +829,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -534,10 +861,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -559,13 +886,21 @@ public class OrderDisplay {
                                 break;
                             case "14":
                                 list = "Choice";
-                                displayList();
+                                if(orderContain(orderList)) {
+                                    list = listChoiceOther();
+                                }else{
+                                    list = listChoice();
+                                }
                                 break;
                             default:
                                 list = "Choice";
                                 nl();
                                 print("Error: That's not a accessible option");
-                                displayList();
+                                if(orderContain(orderList)) {
+                                    list = listChoiceOther();
+                                }else{
+                                    list = listChoice();
+                                }
                                 break;
                         }
                     }
@@ -592,10 +927,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -624,10 +959,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -656,10 +991,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -688,11 +1023,11 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
-                                        }
+                                            list = listChoice();
+                                        };
                                         break;
                                     }
                                     orderList.add(BC4);
@@ -720,10 +1055,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -752,10 +1087,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -784,10 +1119,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -816,10 +1151,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -848,10 +1183,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -880,10 +1215,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                           list = listChoice();
                                         }
                                         break;
                                     }
@@ -913,10 +1248,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -945,10 +1280,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -977,10 +1312,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                          list = listChoice();
                                         }
                                         break;
                                     }
@@ -1009,10 +1344,10 @@ public class OrderDisplay {
                                         list = "Choice";
                                         nl();
                                         print("Error: Combo contains null elements");
-                                        if(orderList.isEmpty()){
-                                            displayList();
+                                        if(orderContain(orderList)) {
+                                            list = listChoiceOther();
                                         }else{
-                                            displayListOther();
+                                            list = listChoice();
                                         }
                                         break;
                                     }
@@ -1033,21 +1368,20 @@ public class OrderDisplay {
                                 }
                                 break;
                             case "15":
-                                list = "Choice";
-                                if(orderList.isEmpty()){
-                                    displayList();
+
+                                if(orderContain(orderList)) {
+                                    list = listChoiceOther();
                                 }else{
-                                    displayListOther();
+                                    list = listChoice();
                                 }
                                 break;
                             default:
-                                list = "Choice";
                                 nl();
                                 print("Error: That's not a accessible option");
-                                if(orderList.isEmpty()){
-                                    displayList();
+                                if(orderContain(orderList)) {
+                                    list = listChoiceOther();
                                 }else{
-                                    displayListOther();
+                                    list = listChoice();
                                 }
                                 break;
                         }
@@ -1177,20 +1511,20 @@ public class OrderDisplay {
                                 break;
                             case"11":
                                 list = "Choice";
-                                if(orderList.isEmpty()){
-                                    displayList();
+                                if(orderContain(orderList)) {
+                                    list = listChoiceOther();
                                 }else{
-                                    displayListOther();
+                                    list = listChoice();
                                 }
                                 break;
                             default:
                                 list = "Choice";
                                 nl();
                                 print("Error: That's not a accessible option");
-                                if(orderList.isEmpty()){
-                                    displayList();
+                                if(orderContain(orderList)) {
+                                    list = listChoiceOther();
                                 }else{
-                                    displayListOther();
+                                    list = listChoice();
                                 }
                                 break;
                         }
@@ -1321,20 +1655,20 @@ public class OrderDisplay {
                                     break;
                                 case"13":
                                     list = "Choice";
-                                    if(orderList.isEmpty()){
-                                        displayList();
+                                    if(orderContain(orderList)) {
+                                        list = listChoiceOther();
                                     }else{
-                                        displayListOther();
+                                        list = listChoice();
                                     }
                                     break;
                                 default:
                                     list = "Choice";
                                     nl();
                                     print("Error: That's not a accessible option");
-                                    if(orderList.isEmpty()){
-                                        displayList();
+                                    if(orderContain(orderList)) {
+                                        list = listChoiceOther();
                                     }else{
-                                        displayListOther();
+                                        list = listChoice();
                                     }
                                     break;
                             }
@@ -1509,22 +1843,22 @@ public class OrderDisplay {
                                 break;
                             case"18":
                                 list = "Choice";
-                                    if(orderList.isEmpty()){
-                                        displayList();
-                                    }else{
-                                        displayListOther();
-                                    }
+                                if(orderContain(orderList)) {
+                                    list = listChoiceOther();
+                                }else{
+                                    list = listChoice();
+                                }
                                     break;
                             default:
                                 list = "Choice";
-                                    nl();
-                                    print("Error: That's not a accessible option");
-                                    if(orderList.isEmpty()){
-                                        displayList();
-                                    }else{
-                                        displayListOther();
-                                    }
-                                    break;
+                                nl();
+                                print("Error: That's not a accessible option");
+                                if(orderContain(orderList)) {
+                                    list = listChoiceOther();
+                                }else{
+                                    list = listChoice();
+                                }
+                                break;
 
                         }
                     }
@@ -1548,9 +1882,39 @@ public class OrderDisplay {
         }
 
     }
+    public static String displayError(ArrayList orderList){
+        nl();
+        print("Error: That's not a accessible option");
+        if(orderContain(orderList)){
+            return listChoiceOther();
+        }else{
+            return listChoice();
+        }
+    }
+
+    public static double getOrderPrice(ArrayList<Order> order){
+        double val = 0;
+        for(int i=0; i < order.size(); i++){
+            val += order.get(i).getPrice();
+
+        }
+        return val;
+    }
 
     public static Burger addBurger(Burger b1){
         return b1;
+    }
+
+
+    public static boolean orderContain(ArrayList orderList){
+        //Returns to the menu
+        if(orderList.isEmpty()){
+            displayList();
+        }else{
+            displayListOther();
+            return true;
+        }
+        return false;
     }
 
     public static String listChoice(){
@@ -1567,13 +1931,21 @@ public class OrderDisplay {
             displayChicken();
             list = "Chicken";
         } else if (choice == 3) {
-            //Display Chicken list
+            //Display Salad list
             displaySalad();
             list = "Salad";
         }else if (choice == 4) {
-            //Display Chicken list
+            //Display Side list
             displaySide();
             list = "Side";
+        }else if (choice == 5) {
+            //Display Drink list
+            displaySideDrink();
+            list = "Drink";
+        }else if (choice == 6) {
+            //Display ETC list
+            displayDrink();
+            list = "ETC";
         } else {
             //Display an error if a nonvalid choice is picked
             print("Error: Invaild Choice");
@@ -1605,23 +1977,21 @@ public class OrderDisplay {
         }else if (choice == 4) {
             //Display Side list
             displaySide();
-            list = "Salad";
+            list = "Side";
         }else if (choice == 5) {
             //Display Drinks list
-            displayDrink();
-            list = "Salad";
+            displaySideDrink();
+            list = "Drink";
         }else if (choice == 6) {
             //Display ETC list
             //displayETC();
-            list = "Salad";
+            list = "ETC";
         }else if (choice == 7) {
             //Change Order
-            //ChangeOrder();
-            list = "Salad";
+            list = "Change Order";
         }else if (choice == 8) {
-            //End order
-            list = "";
-        } else {
+            list = "Order End";
+        }else {
             //Display an error if a nonvalid choice is picked
             print("Error: Invaild Choice");
             list = "Choice";
@@ -1654,24 +2024,27 @@ public class OrderDisplay {
                 list = currentList;
             }else if(currentList.contentEquals("Side") || currentList.contentEquals("SideSkip")){
                 list = currentList;
+            }else if(currentList.contentEquals("Drink") || currentList.contentEquals("DrinkSkip")){
+                list = currentList;
             }else{
                 list = "";
             }
+
         }else if(nonComboChoice.contentEquals("2")){
-            if(obj.isEmpty()){
-                displayList();
-                list = listChoice();
-            }else{
-                displayListOther();
+            //Returns to the menu
+            list = "Choice";
+            if(orderContain(obj)) {
                 list = listChoiceOther();
+            }else{
+                list = listChoice();
             }
 
         }else if(nonComboChoice.contentEquals("3")) {
-
+            //Returns to the prev list
             if(currentList.contentEquals("Chicken")){
                 list = "Chicken";
                 displayChicken();
-            }else if(currentList.contentEquals("Hamburger")){
+            }else if(currentList.contentEquals("Hamburger") || currentList.contentEquals("HamburgerSkip")){
                 list = "Hamburger";
                 displayHamburger();
             }else if(currentList.contentEquals("Salad") || currentList.contentEquals("SaladSkip")){
@@ -1680,16 +2053,21 @@ public class OrderDisplay {
             }else if(currentList.contentEquals("Side") || currentList.contentEquals("SideSkip")){
                 list = "Side";
                 displaySide();
+            }else if(currentList.contentEquals("Drink") || currentList.contentEquals("DrinkSkip")){
+                list = "Drink";
+                displaySideDrink();
             }else{
                 list = "";
             }
+
         }else if(nonComboChoice.contentEquals("4")){
             //End the Order
-            list = "";
+            list = "Order End";
         }else{
             //Throw an error and return to the main list
+            print("Error: That's not a accessible option");
             list = "Choice";
-            displayList();
+            orderContain(obj);
         }
         return list;
     }
@@ -2048,7 +2426,7 @@ public class OrderDisplay {
         nl();
         printStar();
         nl();
-        print("What size will be your Combo");
+        print("What size will be your Drink be?");
         print("(1) Small");
         print("(2) Medium");
         print("(3) Large");
@@ -2059,7 +2437,7 @@ public class OrderDisplay {
         nl();
         printStar();
         nl();
-        print("What size will be your Fries be");
+        print("What size will be your Fries be?");
         print("(1) Small");
         print("(2) Medium");
         print("(3) Large");
@@ -2122,7 +2500,7 @@ public class OrderDisplay {
         nl();
         printStar();
         nl();
-        print("(1) Would you like to order another " + s1.name);
+        print("(1) Would you like to order another " + s1.nameType);
         print("(2) Return to the Main List?");
         print("(3) Return back to Drink List?");
         print("(4) End your order?");
@@ -2163,6 +2541,24 @@ public class OrderDisplay {
         System.out.println("(6) Etc");
         System.out.println("(7) Change Order");
         System.out.println("(8) End Order");
+    }
+
+    public static void displayChoiceRemove(){
+        nl();
+        printStar();
+        nl();
+        System.out.println("(1) Would you like to Remove again?");
+        System.out.println("(2) Would you like to Add?");
+        System.out.println("(3) Would you like to return to the main menu?");
+    }
+
+    public static void displayChoiceAdd(){
+        nl();
+        printStar();
+        nl();
+        System.out.println("(1) Would you like to Add again?");
+        System.out.println("(2) Would you like to Remove?");
+        System.out.println("(3) Would you like to return to the main menu?");
     }
 
     public static void displayHamburger(){
@@ -2213,6 +2609,32 @@ public class OrderDisplay {
         print("(17) Strawberry Lemonade");
     }
 
+    public static void displaySideDrink(){
+        nl();
+        printStar();
+        nl();
+        print("Here are the list of Drinks to order from.");
+        nl();
+        print("(1) Coca-Cola");
+        print("(2) Coca-Cola Zero");
+        print("(3) Diet Coke");
+        print("(4) Sprite");
+        print("(5) Barq's Root Beer");
+        print("(6) Fanta Orange");
+        print("(7) Nestea");
+        print("(8) Fruit Passion Fruitopia");
+        print("(9) Dasani");
+        print("(10) Coffee");
+        print("(11) Decaf Coffee");
+        print("(12) Milk");
+        print("(13) Chocolate Milk");
+        print("(14) Minute Maid Apple Juice");
+        print("(15) Minute Maid Orange Juice");
+        print("(16) Lemonade");
+        print("(17) Strawberry Lemonade");
+        print("(18) **Return**");
+    }
+
     public static void displaySide(){
         nl();
         printStar();
@@ -2231,6 +2653,7 @@ public class OrderDisplay {
         print("(10) Sour Cream & Chive Potato");
         print("(11) Bacon Cheese Potato");
         print("(12) Chilli Cheese Potato");
+        print("(13) **Return**");
     }
 
     public static void displayChicken(){
@@ -2272,6 +2695,18 @@ public class OrderDisplay {
         print("(9) Caesar Side Salad");
         print("(10) Garden Side Salad");
         print("(11) **Return**");
+    }
+
+    public static void displaySaladOptions(){
+        nl();
+        printStar();
+        nl();
+        print("(1) Shredded Cheese");
+        print("(2) Dice tomatos");
+        print("(3) Asiago Cheese");
+        print("(4) 3 Pieces of Bacon");
+        print("(5) Bacon bits");
+
     }
 
 

@@ -5,19 +5,17 @@ public class Drink extends Order {
     boolean ice;
 
 
-    public Drink(String drinkType, String size, boolean ice, String name, String itemType){
-        super(itemType);
+    public Drink(String drinkType, String size, boolean ice, String nameType, String itemType){
+        super(itemType, nameType);
         this.drinkType = drinkType;
         this.size = size;
         this.ice = ice;
-        this.name = name;
         typeOfDrink();
     }
 
-    public Drink(String drinkType, String name, String itemType){ // For packaged Drinks/Hot Drinks
-        super(itemType);
+    public Drink(String drinkType, String nameType, String itemType){ // For packaged Drinks/Hot Drinks
+        super(itemType, nameType);
         this.drinkType = drinkType;
-        this.name = name;
         typeOfDrink();
     }
 
@@ -34,6 +32,7 @@ public class Drink extends Order {
             }else if(size.equals("Large")){
                 price = 0.1;
             }
+            canBeChanged = true;
         }
 
         if(drinkType.equals("Water")){
@@ -42,6 +41,7 @@ public class Drink extends Order {
 
         if(drinkType.equals("Hot Drink")){
             price = 0.1; //Only comes in one size
+            canBeChanged = true;
         }
 
         if(drinkType.equals("Milk")){
@@ -64,9 +64,10 @@ public class Drink extends Order {
             }else if(size.equals("Large")){
                 price = 0.1;
             }
+            canBeChanged = true;
         }
     }
     public String toString(){
-        return size + " " + name;
+        return size + " " + nameType;
     }
 }
