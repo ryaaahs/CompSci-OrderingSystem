@@ -9,11 +9,13 @@ public class Salad extends Order {
     public Salad(String nameType, String size, String itemType){
         super(itemType, nameType);
         this.size = size;
+        canBeChanged = true;
         saladList();
     }
 
     public Salad(String nameType, String itemType){
         super(itemType, nameType);
+        canBeChanged = true;
         saladList();
     }
 

@@ -9,7 +9,7 @@ public class Burger extends Order {
     ArrayList<String> base = new ArrayList<String>();
 
     public Burger(String nameType, String itemType) {
-        super(nameType, itemType);
+        super(itemType, nameType); // Causes an error with y codebased when swapped
         burgerList();
     }
 
@@ -30,6 +30,7 @@ public class Burger extends Order {
             base.add("Cheese");
             base.add("4OZ Meat Patty");
             base.add("Cheese");
+            canBeChanged = true;
         }
 
         if(nameType.equals("Double Cheese")){
@@ -48,6 +49,7 @@ public class Burger extends Order {
             base.add("Cheese");
             base.add("4OZ Meat Patty");
             base.add("Cheese");
+            canBeChanged = true;
         }
 
         if(nameType.equals("Triple Cheese")){
@@ -68,6 +70,7 @@ public class Burger extends Order {
             base.add("Cheese");
             base.add("4OZ Meat Patty");
             base.add("Cheese");
+            canBeChanged = true;
         }
 
         if(nameType.equals("Single Bacon Deluxe")){
@@ -86,6 +89,7 @@ public class Burger extends Order {
             base.add("4OZ Meat Patty");
             base.add("Cheese");
             base.add("3 Pieces of Bacon");
+            canBeChanged = true;
         }
 
         if(nameType.equals("Double Bacon Deluxe")){
@@ -105,6 +109,7 @@ public class Burger extends Order {
             base.add("4OZ Meat Patty");
             base.add("Cheese");
             base.add("3 Pieces of Bacon");
+            canBeChanged = true;
         }
 
         if(nameType.equals("Triple Bacon Deluxe")){
@@ -126,6 +131,7 @@ public class Burger extends Order {
             base.add("4OZ Meat Patty");
             base.add("Cheese");
             base.add("3 Pieces of Bacon");
+            canBeChanged = true;
         }
 
         if(nameType.equals("Single Baconator")){
@@ -140,6 +146,7 @@ public class Burger extends Order {
             base.add("4OZ Meat Patty");
             base.add("Cheese");
             base.add("3 Pieces of Bacon");
+            canBeChanged = true;
         }
 
         if(nameType.equals("Double Baconator")){
@@ -156,6 +163,7 @@ public class Burger extends Order {
             base.add("4OZ Meat Patty");
             base.add("Cheese");
             base.add("3 Pieces of Bacon");
+            canBeChanged = true;
         }
 
         if(nameType.equals("Triple Baconator")){
@@ -175,6 +183,7 @@ public class Burger extends Order {
             base.add("4OZ Meat Patty");
             base.add("Cheese");
             base.add("3 Pieces of Bacon");
+            canBeChanged = true;
         }
 
         if(nameType.equals("Son of the Baconator")){
@@ -191,6 +200,7 @@ public class Burger extends Order {
             base.add("2OZ Meat Patty");
             base.add("Cheese");
             base.add("2 Pieces of Bacon");
+            canBeChanged = true;
         }
 
         if(nameType.equals("Jr. Hamburger Deluxe")){
@@ -206,6 +216,7 @@ public class Burger extends Order {
             crown.add("Iceberg Lettue");
             //Base
             base.add("2OZ Meat Patty");
+            canBeChanged = true;
 
         }
 
@@ -223,6 +234,7 @@ public class Burger extends Order {
             //Base
             base.add("2OZ Meat Patty");
             base.add("Cheese");
+            canBeChanged = true;
         }
 
         if(nameType.equals("Jr. Bacon Cheeseburger")){
@@ -237,6 +249,7 @@ public class Burger extends Order {
             base.add("2OZ Meat Patty");
             base.add("Cheese");
             base.add("2 Pieces of Bacon");
+            canBeChanged = true;
         }
 
         if(nameType.equals("Cheesey Cheeseburger")){
@@ -248,6 +261,7 @@ public class Burger extends Order {
             //Base
             base.add("2OZ Meat Patty");
             base.add("Cheese");
+            canBeChanged = true;
         }
     }
     public String toString(){

@@ -32,6 +32,7 @@ public class Drink extends Order {
             }else if(size.equals("Large")){
                 price = 0.1;
             }
+            canBeChanged = true;
         }
 
         if(drinkType.equals("Water")){
@@ -40,6 +41,7 @@ public class Drink extends Order {
 
         if(drinkType.equals("Hot Drink")){
             price = 0.1; //Only comes in one size
+            canBeChanged = true;
         }
 
         if(drinkType.equals("Milk")){
@@ -62,9 +64,10 @@ public class Drink extends Order {
             }else if(size.equals("Large")){
                 price = 0.1;
             }
+            canBeChanged = true;
         }
     }
     public String toString(){
-        return size + " " + name;
+        return size + " " + nameType;
     }
 }

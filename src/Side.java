@@ -8,11 +8,13 @@ public class Side extends Order {
     public Side(String nameType, String size, String itemType){
         super(itemType, nameType);
         this.size = size;
+        canBeChanged = true;
         sideList();
     }
 
     public Side(String nameType, String itemType){
         super(itemType, nameType);
+        canBeChanged = true;
         sideList();
     }
 

@@ -13,7 +13,7 @@ public class Chicken extends Order {
 
     public Chicken(String nameType, String itemType) {
         super(itemType, nameType);
-        this.nameType = nameType;
+        //this.nameType = nameType;
         chickenList();
     }
 

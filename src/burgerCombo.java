@@ -9,8 +9,8 @@ public class burgerCombo extends Order{
         this.sideItem = sideItem;
         this.drinkItem = drinkItem;
         this.size = size;
-
         price = drinkItem.getPrice() + mainItem.getPrice() + sideItem.getPrice();
+        canBeChanged = true;
     }
 
     public String toString(){

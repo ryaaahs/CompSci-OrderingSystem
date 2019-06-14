@@ -9,7 +9,7 @@ public class chickenCombo extends Order {
         this.sideItem = sideItem;
         this.drinkItem = drinkItem;
         this.size = size;
-
+        canBeChanged = true;
         price = drinkItem.getPrice() + mainItem.getPrice() + sideItem.getPrice();
     }
 
@@ -23,9 +23,4 @@ public class chickenCombo extends Order {
         }
     }
 
-    public void spacing(int amount){
-        for(int i = 0; i < amount; i++){
-            System.out.print("    ");
-        }
-    }
 }
