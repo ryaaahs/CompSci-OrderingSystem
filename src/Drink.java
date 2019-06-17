@@ -68,6 +68,11 @@ public class Drink extends Order {
         }
     }
     public String toString(){
-        return size + " " + nameType;
+        if(size == null){
+            return nameType;
+        }else{
+            return size + " " + nameType;
+        }
+
     }
 }

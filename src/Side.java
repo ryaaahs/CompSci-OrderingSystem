@@ -27,12 +27,14 @@ public class Side extends Order {
             }else if(size.equals("Large")){
                 price = 0.1;
             }
+            canBeChanged = true;
         }
 
         if(nameType.equals("Poutine")) {
             contain.add("Gravy");
             contain.add("Cheese Curds");
             price = 0.1;
+            canBeChanged = true;
         }
 
         if(nameType.equals("Bacon Poutine")) {
@@ -40,6 +42,7 @@ public class Side extends Order {
             contain.add("Cheese Curds");
             contain.add("Ripped Bacon");
             price = 0.1;
+            canBeChanged = true;
         }
 
         if(nameType.equals("Chilli Cheese Fries")) {
@@ -47,6 +50,7 @@ public class Side extends Order {
             contain.add("Cheese Sauce");
             contain.add("Shredded Cheese");
             price = 0.1;
+            canBeChanged = true;
         }
 
         if(nameType.equals("Chilli Cheese Nachos")) {
@@ -54,6 +58,7 @@ public class Side extends Order {
             contain.add("Cheese Sauce");
             contain.add("Nachos");
             price = 0.1;
+            canBeChanged = true;
         }
 
         if(nameType.equals("Chilli")) {
@@ -62,6 +67,7 @@ public class Side extends Order {
             }else{
                 price = 0.1;
             }
+            canBeChanged = true;
         }
 
         if(nameType.equals("Caesar Side Salad")){
@@ -70,6 +76,7 @@ public class Side extends Order {
             contain.add("Lettue Blend");
             contain.add("Croutons");
             price = 0.1;
+            canBeChanged = true;
         }
 
         if(nameType.equals("Garden Side Salad")){
@@ -78,17 +85,20 @@ public class Side extends Order {
             contain.add("Salad Blend");
             contain.add("Croutons");
             price = 0.1;
+            canBeChanged = true;
         }
 
         if(nameType.equals("Plain Potato")){
             contain.add("Plain Potato");
             price = 0.1;
+            canBeChanged = true;
         }
 
         if(nameType.equals("Sour Cream & Chives Potato")){
             contain.add("Chives");
             contain.add("Sour Cream");
             price = 0.1;
+            canBeChanged = true;
         }
 
         if(nameType.equals("Bacon Cheese Potato")){
@@ -96,6 +106,7 @@ public class Side extends Order {
             contain.add("Cheese Sauces");
             contain.add("Shredded Cheese");
             price = 0.1;
+            canBeChanged = true;
         }
 
         if(nameType.equals("Chilli Cheese Potato")){
@@ -103,6 +114,7 @@ public class Side extends Order {
             contain.add("Cheese Sauces");
             contain.add("Shredded Cheese");
             price = 0.1;
+            canBeChanged = true;
         }
     }
         public String toString(){

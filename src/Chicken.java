@@ -29,6 +29,7 @@ public class Chicken extends Order {
             crown.add("Iceberg Lettue");
             //Base
             base.add("Spicy Chicken Breast");
+            canBeChanged = true;
 
         }
 
@@ -42,6 +43,7 @@ public class Chicken extends Order {
             crown.add("Iceberg Lettue");
             //Base
             base.add("Homestyle Chicken Breast");
+            canBeChanged = true;
 
         }
 
@@ -55,6 +57,7 @@ public class Chicken extends Order {
             crown.add("Spring Mix Lettue");
             //Base
             base.add("Grilled Chicken Breast");
+            canBeChanged = true;
 
         }
 
@@ -70,6 +73,7 @@ public class Chicken extends Order {
             base.add("Spicy Chicken Breast");
             base.add("Asiago Cheese");
             base.add("3 Pieces of bacon");
+            canBeChanged = true;
 
         }
 
@@ -85,6 +89,7 @@ public class Chicken extends Order {
             base.add("Homestyle Chicken Breast");
             base.add("Asiago Cheese");
             base.add("3 Pieces of bacon");
+            canBeChanged = true;
 
         }
 
@@ -100,6 +105,7 @@ public class Chicken extends Order {
             base.add("Grilled Chicken Breast");
             base.add("Asiago Cheese");
             base.add("3 Pieces of bacon");
+            canBeChanged = true;
 
         }
 
@@ -107,6 +113,7 @@ public class Chicken extends Order {
             bunType = "Null";
             canCombo = false;
             price = 0.1;
+            canBeChanged = true;
             //Add Suace to the order
         }
 
@@ -114,6 +121,7 @@ public class Chicken extends Order {
             bunType = "Null";
             canCombo = true;
             price = 0.1;
+            canBeChanged = true;
             //Item
 
             //Add Suace to the order
@@ -123,6 +131,7 @@ public class Chicken extends Order {
             bunType = "Null";
             canCombo = true;
             price = 0.1;
+            canBeChanged = true;
             //Item
             //Add Suace to the order
         }
@@ -131,6 +140,7 @@ public class Chicken extends Order {
             bunType = "Null";
             canCombo = true;
             price = 0.1;
+            canBeChanged = true;
             //Item
             //Add Suace to the order
         }
@@ -143,7 +153,8 @@ public class Chicken extends Order {
             base.add("Honey Mustard");
             base.add("Shredded Cheese");
             base.add("Chopped Iceburg Lettue");
-            base.add("Half a Grilled Chicken Breast");
+            base.add("Half a Grilled Chicken");
+            canBeChanged = true;
         }
 
         if(nameType.equals("Spicy Chicken Wrap")){
@@ -154,7 +165,8 @@ public class Chicken extends Order {
             base.add("Ranch Sauce");
             base.add("Shredded Cheese");
             base.add("Chopped Iceburg Lettue");
-            base.add("Half a Spicy Chicken Breast");
+            base.add("Half a Spicy Chicken");
+            canBeChanged = true;
         }
 
         if(nameType.equals("Homestyle Chicken Wrap")){
@@ -165,18 +177,28 @@ public class Chicken extends Order {
             base.add("Ranch Sauce");
             base.add("Shredded Cheese");
             base.add("Chopped Iceburg Lettue");
-            base.add("Half a Homestyle Chicken Breast");
+            base.add("Half a Homestyle Chicken");
+            canBeChanged = true;
         }
     }
 
     public String toString(){
         if(nameType.contentEquals("5 Piece Chicken Nugget") || nameType.contentEquals("10 Piece Chicken Nugget")){
-            return nameType + "\n" + "    " + item.get(0) + "\n" + "    " + item.get(1);
+            return nameType + itemLoop();
+
         }else if(nameType.contentEquals("Homestyle Chicken Strips") || nameType.contentEquals("Spicy Chicken Strips")){
-            return nameType + "\n" + "    " + item.get(0) + "\n" + "    " + item.get(1);
+            return nameType + itemLoop();
         }else{
             return nameType;
         }
 
+    }
+
+    public String itemLoop(){
+        String list = "";
+        for(int i = 0; i < item.size(); i++){
+             list = list + "\n" + "    " + item.get(i);
+        }
+        return list;
     }
 }

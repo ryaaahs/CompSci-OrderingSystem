@@ -19,12 +19,26 @@ public class OrderDisplay {
 
         //Change Holders
         Burger changeBurger = null;
+        Burger coBurger = null;
+
+        Chicken changeChickenWrap = null;
+        Chicken coChickenWrap = null;
         Chicken changeChicken = null;
+        Chicken coChicken = null;
+        Chicken changeChickenSide = null;
+        Chicken coChickenSide = null;
+
         Salad coSalad = null;
         Salad changeSalad = null;
+
         Drink chanageDrink = null;
         Side changeSide = null;
         int aRPick = 0; // 1 for Add, 2 for Remove, 0 for null
+        int addOrRemove = 0;
+        int burgerPick = 0;
+        int chickenPick = 0;
+        String burgerChangeChoice = "";
+        String chickenChangeChoice = "";
 
 
         while (order) {
@@ -89,43 +103,2558 @@ public class OrderDisplay {
                 if(list.contentEquals("Change Order")){
                     //Loop through the current order list
                     int changePick = 1;
+
                     if(aRPick == 0) {
                         nl();
                         printStar();
                         nl();
                         print("Which one would you like to change?");
                         for (int i = 0; i < orderList.size(); i++) {
-                            if (orderList.get(i).itemType.contentEquals("Salad")) {
+                            if (orderList.get(i).itemType.contentEquals("Chicken Side")) {
+                                nl();
+                                printStar();
+                                nl();
+                                System.out.println("(" + (i + 1) + ") " + orderList.get(i).nameType);   // + " " + ((Salad) orderList.get(i)).size
+                            }else{
+                                nl();
+                                printStar();
+                                nl();
                                 System.out.println("(" + (i + 1) + ") " + orderList.get(i));   // + " " + ((Salad) orderList.get(i)).size
                             }
                         }
 
                         changePick = scrChoice.nextInt();
-                        System.out.println("You are changing the " + orderList.get(changePick - 1));
+                        nl();
+                        printStar();
+                        nl();
+                        if (orderList.get(changePick - 1).itemType.contentEquals("Chicken Side")) {
+                            System.out.println("You are changing the " + orderList.get(changePick - 1).nameType);
+                        }else{
+                            System.out.println("You are changing the " + orderList.get(changePick - 1));
+                        }
+
                     }
 
-                    if (orderList.get(changePick - 1).itemType.contentEquals("Salad") || changeSalad != null) {
 
+                    //Chicken Wrap
+                    if (orderList.get(changePick - 1).itemType.contentEquals("Chicken Wrap") || changeChickenWrap != null) {
 
-                        int addOrRemove = 0;
                         if(aRPick == 0) {
-                            coSalad = (Salad) orderList.get(changePick - 1);
+                            coChickenWrap = (Chicken) orderList.get(changePick - 1);
+
                             nl();
                             printStar();
                             nl();
-                            print("The Salad contains: ");
-                            for (int i = 0; i < coSalad.contain.size(); i++) {
-                                System.out.println(coSalad.contain.get(i));
+                            print("The Chicken Wrap contains: ");
+
+                            for (int i = 0; i < coChickenWrap.base.size(); i++) {
+                                System.out.println(coChickenWrap.base.get(i));
                             }
                             nl();
                             printStar();
-                            nl();print("What would you like to Add or Remove from the " + coSalad + " (1)[Add] (2)[Remove]");
+                            nl();
+                            print("What would you like to Add or Remove from the Chicken Wrap? (1)[Add] (2)[Remove]");
+                            addOrRemove = scrChoice.nextInt();
+                        }
+
+                        if (addOrRemove == 1 || aRPick == 1) {
+
+                            //ADD
+                            nl();
+                            printStar();
+                            nl();
+                            print("Here are a list you can add to the Chicken Wrap. (Pick)");
+
+                            displayWrapOptions();
+                            int addPick = scrChoice.nextInt();
+
+                            if(addPick == 1){
+                                if(aRPick != 0){
+                                    changeChickenWrap.base.add("N Ranch");
+                                }else{
+                                    coChickenWrap.base.add("N Ranch");
+                                }
+
+                                nl();
+                                printStar();
+                                nl();
+                                System.out.println("You added: Ranch");
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Chicken Wrap now contains: ");
+                                if(aRPick != 0){
+                                    for (int i = 0; i < changeChickenWrap.base.size(); i++) {
+                                        System.out.println(changeChickenWrap.base.get(i));
+                                    }
+                                }else{
+                                    for (int i = 0; i < coChickenWrap.base.size(); i++) {
+                                        System.out.println(coChickenWrap.base.get(i));
+                                    }
+                                }
+
+                                displayChoiceAdd();
+                                addPick = scrChoice.nextInt();
+
+                                if (addPick == 1) {
+                                    //Allow them to add the current item again
+                                    changeChickenWrap = coChickenWrap;
+                                    aRPick = 1;
+                                } else if (addPick == 2) {
+                                    //Bring them to the Remove menu for the item
+                                    changeChickenWrap = coChickenWrap;
+                                    aRPick = 2;
+                                } else if (addPick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeChickenWrap = null;
+                                    aRPick = 0;
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeChickenWrap = null;
+                                    aRPick = 0;
+                                }
+
+                            }else if(addPick == 2){
+                                if(aRPick != 0){
+                                    changeChickenWrap.base.add("N Honey Mustard");
+                                }else{
+                                    coChickenWrap.base.add("N Honey Mustard");
+                                }
+
+                                nl();
+                                printStar();
+                                nl();
+                                System.out.println("You added: Honey Mustard");
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Chicken Wrap now contains: ");
+                                if(aRPick != 0){
+                                    for (int i = 0; i < changeChickenWrap.base.size(); i++) {
+                                        System.out.println(changeChickenWrap.base.get(i));
+                                    }
+                                }else{
+                                    for (int i = 0; i < coChickenWrap.base.size(); i++) {
+                                        System.out.println(coChickenWrap.base.get(i));
+                                    }
+                                }
+
+                                displayChoiceAdd();
+                                addPick = scrChoice.nextInt();
+
+                                if (addPick == 1) {
+                                    //Allow them to add the current item again
+                                    changeChickenWrap = coChickenWrap;
+                                    aRPick = 1;
+                                } else if (addPick == 2) {
+                                    //Bring them to the Remove menu for the item
+                                    changeChickenWrap = coChickenWrap;
+                                    aRPick = 2;
+                                } else if (addPick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeChickenWrap = null;
+                                    aRPick = 0;
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeChickenWrap = null;
+                                    aRPick = 0;
+                                }
+
+                            }else if(addPick == 3){
+                                if(aRPick != 0){
+                                    changeChickenWrap.base.add("N Shredded Cheese");
+                                }else{
+                                    coChickenWrap.base.add("N Shredded Cheese");
+                                }
+
+                                nl();
+                                printStar();
+                                nl();
+                                System.out.println("You added: Shredded Cheese");
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Chicken Wrap now contains: ");
+                                if(aRPick != 0){
+                                    for (int i = 0; i < changeChickenWrap.base.size(); i++) {
+                                        System.out.println(changeChickenWrap.base.get(i));
+                                    }
+                                }else{
+                                    for (int i = 0; i < coChickenWrap.base.size(); i++) {
+                                        System.out.println(coChickenWrap.base.get(i));
+                                    }
+                                }
+
+                                displayChoiceAdd();
+                                addPick = scrChoice.nextInt();
+
+                                if (addPick == 1) {
+                                    //Allow them to add the current item again
+                                    changeChickenWrap = coChickenWrap;
+                                    aRPick = 1;
+                                } else if (addPick == 2) {
+                                    //Bring them to the Remove menu for the item
+                                    changeChickenWrap = coChickenWrap;
+                                    aRPick = 2;
+                                } else if (addPick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeChickenWrap = null;
+                                    aRPick = 0;
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeChickenWrap = null;
+                                    aRPick = 0;
+                                }
+
+                            }else if(addPick == 4){
+                                if(aRPick != 0){
+                                    changeChickenWrap.base.add("N Half a Grilled Chicken");
+                                }else{
+                                    coChickenWrap.base.add("N Half a Grilled Chicken");
+                                }
+
+                                nl();
+                                printStar();
+                                nl();
+                                System.out.println("You added: Half a Grilled Chicken");
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Chicken Wrap now contains: ");
+                                if(aRPick != 0){
+                                    for (int i = 0; i < changeChickenWrap.base.size(); i++) {
+                                        System.out.println(changeChickenWrap.base.get(i));
+                                    }
+                                }else{
+                                    for (int i = 0; i < coChickenWrap.base.size(); i++) {
+                                        System.out.println(coChickenWrap.base.get(i));
+                                    }
+                                }
+
+                                displayChoiceAdd();
+                                addPick = scrChoice.nextInt();
+
+                                if (addPick == 1) {
+                                    //Allow them to add the current item again
+                                    changeChickenWrap = coChickenWrap;
+                                    aRPick = 1;
+                                } else if (addPick == 2) {
+                                    //Bring them to the Remove menu for the item
+                                    changeChickenWrap = coChickenWrap;
+                                    aRPick = 2;
+                                } else if (addPick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeChickenWrap = null;
+                                    aRPick = 0;
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeChickenWrap = null;
+                                    aRPick = 0;
+                                }
+
+                            }else if(addPick == 5){
+                                if(aRPick != 0){
+                                    changeChickenWrap.base.add("N Half a Spicy Chicken");
+                                }else{
+                                    coChickenWrap.base.add("N Half a Spicy Chicken");
+                                }
+
+                                nl();
+                                printStar();
+                                nl();
+                                System.out.println("You added: Half a Spicy Chicken");
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Chicken Wrap now contains: ");
+                                if(aRPick != 0){
+                                    for (int i = 0; i < changeChickenWrap.base.size(); i++) {
+                                        System.out.println(changeChickenWrap.base.get(i));
+                                    }
+                                }else{
+                                    for (int i = 0; i < coChickenWrap.base.size(); i++) {
+                                        System.out.println(coChickenWrap.base.get(i));
+                                    }
+                                }
+
+                                displayChoiceAdd();
+                                addPick = scrChoice.nextInt();
+
+                                if (addPick == 1) {
+                                    //Allow them to add the current item again
+                                    changeChickenWrap = coChickenWrap;
+                                    aRPick = 1;
+                                } else if (addPick == 2) {
+                                    //Bring them to the Remove menu for the item
+                                    changeChickenWrap = coChickenWrap;
+                                    aRPick = 2;
+                                } else if (addPick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeChickenWrap = null;
+                                    aRPick = 0;
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeChickenWrap = null;
+                                    aRPick = 0;
+                                }
+
+                            }else if(addPick == 6){
+                                if(aRPick != 0){
+                                    changeChickenWrap.base.add("N Half a Homestyle Chicken");
+                                }else{
+                                    coChickenWrap.base.add("N Half a Homestyle Chicken");
+                                }
+
+                                nl();
+                                printStar();
+                                nl();
+                                System.out.println("You added: Half a Homestyle Chicken");
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Chicken Wrap now contains: ");
+                                if(aRPick != 0){
+                                    for (int i = 0; i < changeChickenWrap.base.size(); i++) {
+                                        System.out.println(changeChickenWrap.base.get(i));
+                                    }
+                                }else{
+                                    for (int i = 0; i < coChickenWrap.base.size(); i++) {
+                                        System.out.println(coChickenWrap.base.get(i));
+                                    }
+                                }
+
+                                displayChoiceAdd();
+                                addPick = scrChoice.nextInt();
+
+                                if (addPick == 1) {
+                                    //Allow them to add the current item again
+                                    changeChickenWrap = coChickenWrap;
+                                    aRPick = 1;
+                                } else if (addPick == 2) {
+                                    //Bring them to the Remove menu for the item
+                                    changeChickenWrap = coChickenWrap;
+                                    aRPick = 2;
+                                } else if (addPick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeChickenWrap = null;
+                                    aRPick = 0;
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeChickenWrap = null;
+                                    aRPick = 0;
+                                }
+
+                            }else{
+                                //Show an error and reset
+                                list = displayError(orderList);
+                                changeChickenWrap = null;
+                                aRPick = 0;
+                            }
+
+                        } else if (addOrRemove == 2 || aRPick == 2){
+                            //REMOVE
+                            nl();
+                            printStar();
+                            nl();
+                            print("What would you like to remove?");
+                            if(aRPick == 0) {
+                                for (int i = 0; i < coChickenWrap.base.size(); i++) {
+                                    System.out.println("(" + (i + 1) + ") " + coChickenWrap.base.get(i));
+                                }
+                            }else{
+                                for (int i = 0; i < changeChickenWrap.base.size(); i++) {
+                                    System.out.println("(" + (i + 1) + ") " + changeChickenWrap.base.get(i));
+                                }
+                            }
+
+                            int removeIndex = scrChoice.nextInt();
+                            removeIndex -= 1;
+
+                            if (!(removeIndex > coChickenWrap.base.size()) && aRPick == 0) {
+                                print("You removed: " + coChickenWrap.base.get(removeIndex));
+                                coChickenWrap.base.remove(removeIndex);
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Chicken Wrap now contains: ");
+
+                                for (int i = 0; i < coChickenWrap.base.size(); i++) {
+                                    System.out.println(coChickenWrap.base.get(i));
+                                }
+
+                                displayChoiceRemove();
+                                int removePick = scrChoice.nextInt();
+
+                                if (removePick == 1) {
+                                    //Allow them to remove the current item again
+                                    changeChickenWrap = coChickenWrap;
+                                    aRPick = 2;
+                                } else if (removePick == 2) {
+                                    //Bring them to the Add menu for the item
+                                    changeChickenWrap = coChickenWrap;
+                                    aRPick = 1;
+                                } else if (removePick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeChickenWrap = null;
+                                    aRPick = 0;
+                                } else {
+                                    //show an error
+                                    list = displayError(orderList);
+                                    changeChickenWrap = null;
+                                    aRPick = 0;
+                                }
+                            }else if(!(removeIndex > changeChickenWrap.base.size()) && aRPick > 0){
+                                print("You removed: " + changeChickenWrap.base.get(removeIndex));
+                                changeChickenWrap.base.remove(removeIndex);
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Chicken Wrap now contains: ");
+
+                                for (int i = 0; i < changeChickenWrap.base.size(); i++) {
+                                    System.out.println(changeChickenWrap.base.get(i));
+                                }
+
+                                displayChoiceRemove();
+                                int removePick = scrChoice.nextInt();
+
+                                if (removePick == 1) {
+                                    //Allow them to remove the current item again
+                                    changeChickenWrap = coChickenWrap;
+                                    aRPick = 2;
+                                } else if (removePick == 2) {
+                                    //Bring them to the Add menu for the item
+                                    changeChickenWrap = coChickenWrap;
+                                    aRPick = 1;
+                                } else if (removePick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeChickenWrap = null;
+                                    aRPick = 0;
+                                } else {
+                                    //show an error
+                                    list = displayError(orderList);
+                                    changeChickenWrap = null;
+                                    aRPick = 0;
+                                }
+                            }else {
+                                //Show an error and reset
+                                list = displayError(orderList);
+                                changeChickenWrap = null;
+                                aRPick = 0;
+                            }
+                        }
+                        addOrRemove = 0;
+                    }
+
+                    //Chicken Side
+                    if (orderList.get(changePick - 1).itemType.contentEquals("Chicken Side") || changeChickenSide != null) {
+
+                        if(aRPick == 0) {
+                            coChickenSide = (Chicken) orderList.get(changePick - 1);
+
+                            nl();
+                            printStar();
+                            nl();
+                            print("The Chicken Side contains: ");
+
+                            for (int i = 0; i < coChickenSide.item.size(); i++) {
+                                System.out.println(coChickenSide.item.get(i));
+                            }
+                            nl();
+                            printStar();
+                            nl();
+                            print("What would you like to Add or Remove from the Chicken Side? (1)[Add] (2)[Remove]");
                             addOrRemove = scrChoice.nextInt();
                         }
 
                         if (addOrRemove == 1 || aRPick == 1) {
                             //ADD
-                            print("Here are a list you can add to the Salad");
+                            nl();
+                            printStar();
+                            nl();
+                            print("Here are a list you can add to the Chicken Side. (Pick)");
+                            displaySauceOptions();
+                            int addPick = scrChoice.nextInt();
+
+                            if(addPick == 1){
+                                if(aRPick != 0){
+                                    changeChickenSide.item.add("N Sweet and Sour");
+                                }else{
+                                    coChickenSide.item.add("N Sweet and Sour");
+                                }
+
+                                nl();
+                                printStar();
+                                nl();
+                                System.out.println("You added: Sweet and Sour");
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Chicken Side now contains: ");
+                                if(aRPick != 0){
+                                    for (int i = 0; i < changeChickenSide.item.size(); i++) {
+                                        System.out.println(changeChickenSide.item.get(i));
+                                    }
+                                }else{
+                                    for (int i = 0; i < coChickenSide.item.size(); i++) {
+                                        System.out.println(coChickenSide.item.get(i));
+                                    }
+                                }
+
+                                displayChoiceAdd();
+                                addPick = scrChoice.nextInt();
+
+                                if (addPick == 1) {
+                                    //Allow them to add the current item again
+                                    changeChickenSide = coChickenSide;
+                                    aRPick = 1;
+                                } else if (addPick == 2) {
+                                    //Bring them to the Remove menu for the item
+                                    changeChickenSide = coChickenSide;
+                                    aRPick = 2;
+                                } else if (addPick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeChickenSide = null;
+                                    aRPick = 0;
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeChickenSide = null;
+                                    aRPick = 0;
+                                }
+
+                            }else if(addPick == 2){
+                                if(aRPick != 0){
+                                    changeChickenSide.item.add("N BBQ");
+                                }else{
+                                    coChickenSide.item.add("N BBQ");
+                                }
+
+                                nl();
+                                printStar();
+                                nl();
+                                System.out.println("You added: BBQ");
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Chicken Side now contains: ");
+                                if(aRPick != 0){
+                                    for (int i = 0; i < changeChickenSide.item.size(); i++) {
+                                        System.out.println(changeChickenSide.item.get(i));
+                                    }
+                                }else{
+                                    for (int i = 0; i < coChickenSide.item.size(); i++) {
+                                        System.out.println(coChickenSide.item.get(i));
+                                    }
+                                }
+
+                                displayChoiceAdd();
+                                addPick = scrChoice.nextInt();
+
+                                if (addPick == 1) {
+                                    //Allow them to add the current item again
+                                    changeChickenSide = coChickenSide;
+                                    aRPick = 1;
+                                } else if (addPick == 2) {
+                                    //Bring them to the Remove menu for the item
+                                    changeChickenSide = coChickenSide;
+                                    aRPick = 2;
+                                } else if (addPick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeChickenSide = null;
+                                    aRPick = 0;
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeChickenSide = null;
+                                    aRPick = 0;
+                                }
+
+                            }else if(addPick == 3){
+                                if(aRPick != 0){
+                                    changeChickenSide.item.add("N Buttermilk Ranch");
+                                }else{
+                                    coChickenSide.item.add("N Buttermilk Ranch");
+                                }
+
+                                nl();
+                                printStar();
+                                nl();
+                                System.out.println("You added: Buttermilk Ranch");
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Chicken Side now contains: ");
+                                if(aRPick != 0){
+                                    for (int i = 0; i < changeChickenSide.item.size(); i++) {
+                                        System.out.println(changeChickenSide.item.get(i));
+                                    }
+                                }else{
+                                    for (int i = 0; i < coChickenSide.item.size(); i++) {
+                                        System.out.println(coChickenSide.item.get(i));
+                                    }
+                                }
+
+                                displayChoiceAdd();
+                                addPick = scrChoice.nextInt();
+
+                                if (addPick == 1) {
+                                    //Allow them to add the current item again
+                                    changeChickenSide = coChickenSide;
+                                    aRPick = 1;
+                                } else if (addPick == 2) {
+                                    //Bring them to the Remove menu for the item
+                                    changeChickenSide = coChickenSide;
+                                    aRPick = 2;
+                                } else if (addPick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeChickenSide = null;
+                                    aRPick = 0;
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeChickenSide = null;
+                                    aRPick = 0;
+                                }
+
+                            }else if(addPick == 4){
+                                if(aRPick != 0){
+                                    changeChickenSide.item.add("N Honey Mustard");
+                                }else{
+                                    coChickenSide.item.add("N Honey Mustard");
+                                }
+
+                                nl();
+                                printStar();
+                                nl();
+                                System.out.println("You added: 3 Pieces of Bacon");
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Chicken Side now contains: ");
+                                if(aRPick != 0){
+                                    for (int i = 0; i < changeChickenSide.item.size(); i++) {
+                                        System.out.println(changeChickenSide.item.get(i));
+                                    }
+                                }else{
+                                    for (int i = 0; i < coChickenSide.item.size(); i++) {
+                                        System.out.println(coChickenSide.item.get(i));
+                                    }
+                                }
+
+                                displayChoiceAdd();
+                                addPick = scrChoice.nextInt();
+
+                                if (addPick == 1) {
+                                    //Allow them to add the current item again
+                                    changeChickenSide = coChickenSide;
+                                    aRPick = 1;
+                                } else if (addPick == 2) {
+                                    //Bring them to the Remove menu for the item
+                                    changeChickenSide = coChickenSide;
+                                    aRPick = 2;
+                                } else if (addPick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeChickenSide = null;
+                                    aRPick = 0;
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeChickenSide = null;
+                                    aRPick = 0;
+                                }
+
+                            }else if(addPick == 5){
+                                if(aRPick != 0){
+                                    changeChickenSide.item.add("N Creamy Sriracha");
+                                }else{
+                                    coChickenSide.item.add("N Creamy Sriracha");
+                                }
+
+                                nl();
+                                printStar();
+                                nl();
+                                System.out.println("You added: Creamy Sriracha");
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Chicken Side now contains: ");
+                                if(aRPick != 0){
+                                    for (int i = 0; i < changeChickenSide.item.size(); i++) {
+                                        System.out.println(changeChickenSide.item.get(i));
+                                    }
+                                }else{
+                                    for (int i = 0; i < coChickenSide.item.size(); i++) {
+                                        System.out.println(coChickenSide.item.get(i));
+                                    }
+                                }
+
+                                displayChoiceAdd();
+                                addPick = scrChoice.nextInt();
+
+                                if (addPick == 1) {
+                                    //Allow them to add the current item again
+                                    changeChickenSide = coChickenSide;
+                                    aRPick = 1;
+                                } else if (addPick == 2) {
+                                    //Bring them to the Remove menu for the item
+                                    changeChickenSide = coChickenSide;
+                                    aRPick = 2;
+                                } else if (addPick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeChickenSide = null;
+                                    aRPick = 0;
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeChickenSide = null;
+                                    aRPick = 0;
+                                }
+
+                            }else if(addPick == 6){
+                                if(aRPick != 0){
+                                    changeChickenSide.item.add("N Ketchup");
+                                }else{
+                                    coChickenSide.item.add("N Ketchup");
+                                }
+
+                                nl();
+                                printStar();
+                                nl();
+                                System.out.println("You added: Ketchup");
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Chicken Side now contains: ");
+                                if(aRPick != 0){
+                                    for (int i = 0; i < changeChickenSide.item.size(); i++) {
+                                        System.out.println(changeChickenSide.item.get(i));
+                                    }
+                                }else{
+                                    for (int i = 0; i < coChickenSide.item.size(); i++) {
+                                        System.out.println(coChickenSide.item.get(i));
+                                    }
+                                }
+
+                                displayChoiceAdd();
+                                addPick = scrChoice.nextInt();
+
+                                if (addPick == 1) {
+                                    //Allow them to add the current item again
+                                    changeChickenSide = coChickenSide;
+                                    aRPick = 1;
+                                } else if (addPick == 2) {
+                                    //Bring them to the Remove menu for the item
+                                    changeChickenSide = coChickenSide;
+                                    aRPick = 2;
+                                } else if (addPick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeChickenSide = null;
+                                    aRPick = 0;
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeChickenSide = null;
+                                    aRPick = 0;
+                                }
+
+                            }else{
+                                //Show an error and reset
+                                list = displayError(orderList);
+                                changeSalad = null;
+                                aRPick = 0;
+                            }
+
+                        } else if (addOrRemove == 2 || aRPick == 2){
+                            //REMOVE
+                            print("What would you like to remove?");
+                            if(aRPick == 0) {
+                                for (int i = 0; i < coChickenSide.item.size(); i++) {
+                                    System.out.println("(" + (i + 1) + ") " + coChickenSide.item.get(i));
+                                }
+                            }else{
+                                for (int i = 0; i < changeChickenSide.item.size(); i++) {
+                                    System.out.println("(" + (i + 1) + ") " + changeChickenSide.item.get(i));
+                                }
+                            }
+
+                            int removeIndex = scrChoice.nextInt();
+                            removeIndex -= 1;
+
+                            if (!(removeIndex > coChickenSide.item.size()) && aRPick == 0) {
+                                print("You removed: " + coChickenSide.item.get(removeIndex));
+                                coSalad.contain.remove(removeIndex);
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Chicken Side now contains: ");
+
+                                for (int i = 0; i < coChickenSide.item.size(); i++) {
+                                    System.out.println(coChickenSide.item.get(i));
+                                }
+
+                                displayChoiceRemove();
+                                int removePick = scrChoice.nextInt();
+
+                                if (removePick == 1) {
+                                    //Allow them to remove the current item again
+                                    changeChickenSide = coChickenSide;
+                                    aRPick = 2;
+                                } else if (removePick == 2) {
+                                    //Bring them to the Add menu for the item
+                                    changeChickenSide = coChickenSide;
+                                    aRPick = 1;
+                                } else if (removePick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeChickenSide = null;
+                                    aRPick = 0;
+                                } else {
+                                    //show an error
+                                    list = displayError(orderList);
+                                    changeChickenSide = null;
+                                    aRPick = 0;
+                                }
+                            }else if(!(removeIndex > changeChickenSide.item.size()) && aRPick > 0){
+                                print("You removed: " + changeChickenSide.item.get(removeIndex));
+                                changeChickenSide.item.remove(removeIndex);
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Chicken Side now contains: ");
+
+                                for (int i = 0; i < changeChickenSide.item.size(); i++) {
+                                    System.out.println(changeChickenSide.item.get(i));
+                                }
+
+                                displayChoiceRemove();
+                                int removePick = scrChoice.nextInt();
+
+                                if (removePick == 1) {
+                                    //Allow them to remove the current item again
+                                    changeChickenSide = coChickenSide;
+                                    aRPick = 2;
+                                } else if (removePick == 2) {
+                                    //Bring them to the Add menu for the item
+                                    changeChickenSide = coChickenSide;
+                                    aRPick = 1;
+                                } else if (removePick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeChickenSide = null;
+                                    aRPick = 0;
+                                } else {
+                                    //show an error
+                                    list = displayError(orderList);
+                                    changeChickenSide = null;
+                                    aRPick = 0;
+                                }
+                            }else {
+                                //Show an error and reset
+                                list = displayError(orderList);
+                                changeChickenSide = null;
+                                aRPick = 0;
+                            }
+                        }
+                        addOrRemove = 0;
+                    }
+
+                    //Chicken Change
+                    if (orderList.get(changePick - 1).itemType.contentEquals("Chicken") || changeBurger != null) {
+
+                        if(aRPick == 0) {
+                            coChicken = (Chicken) orderList.get(changePick - 1);
+                            nl();
+                            printStar();
+                            nl();
+                            print("Which do you want to change..." + " (1)[Crown] (2)[Base]");
+                            chickenPick = scrChoice.nextInt();
+
+                            if(chickenPick == 1){
+                                chickenChangeChoice = "Crown";
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("You are changing the crown for: " + coChicken);
+
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("What would you like to Add or Remove from the " + coChicken + " crown... (1)[Add] (2)[Remove]");
+
+                                addOrRemove = scrChoice.nextInt();
+                            }else if(chickenPick == 2){
+                                chickenChangeChoice = "Base";
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("You are changing the base for: " + coChicken);
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("What would you like to Add or Remove from the " + coChicken + " base... (1)[Add] (2)[Remove]");
+
+                                addOrRemove = scrChoice.nextInt();
+                            }else{
+                                //show error
+                            }
+                        }
+
+                        if(chickenChangeChoice.contentEquals("Crown")){
+
+                            if (addOrRemove == 1 || aRPick == 1) {
+                                //ADD
+                                nl();
+                                printStar();
+                                nl();
+                                print("Here are a list you can add to the Burger crown (Pick)");
+                                displayCrownOptions();
+                                int addPick = scrChoice.nextInt();
+
+                                if(addPick == 1){
+                                    if(aRPick != 0){
+                                        changeChicken.crown.add("N Ranch");
+                                    }else{
+                                        coChicken.crown.add("N Ranch");
+                                    }
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    System.out.println("You added: Ranch");
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Burger crown now contains: ");
+                                    if(aRPick != 0){
+                                        for (int i = 0; i < changeChicken.crown.size(); i++) {
+                                            System.out.println(changeChicken.crown.get(i));
+                                        }
+                                    }else{
+                                        for (int i = 0; i < coChicken.crown.size(); i++) {
+                                            System.out.println(coChicken.crown.get(i));
+                                        }
+                                    }
+
+                                    displayChoiceAdd();
+                                    addPick = scrChoice.nextInt();
+
+                                    if (addPick == 1) {
+                                        //Allow them to add the current item again
+                                        changeChicken = coChicken;
+                                        aRPick = 1;
+                                    } else if (addPick == 2) {
+                                        //Bring them to the Remove menu for the item
+                                        changeChicken = coChicken;
+                                        aRPick = 2;
+                                    } else if (addPick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //Show an error and reset
+                                        list = displayError(orderList);
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    }
+
+                                }else if(addPick == 2){
+                                    if(aRPick != 0){
+                                        changeBurger.crown.add("N Honey Mustard");
+                                    }else{
+                                        coBurger.crown.add("N Honey Mustard");
+                                    }
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    System.out.println("You added: Honey Mustard");
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Chicken crown now contains: ");
+                                    if(aRPick != 0){
+                                        for (int i = 0; i < changeChicken.crown.size(); i++) {
+                                            System.out.println(changeChicken.crown.get(i));
+                                        }
+                                    }else{
+                                        for (int i = 0; i < coChicken.crown.size(); i++) {
+                                            System.out.println(coChicken.crown.get(i));
+                                        }
+                                    }
+
+                                    displayChoiceAdd();
+                                    addPick = scrChoice.nextInt();
+
+                                    if (addPick == 1) {
+                                        //Allow them to add the current item again
+                                        changeChicken = coChicken;
+                                        aRPick = 1;
+                                    } else if (addPick == 2) {
+                                        //Bring them to the Remove menu for the item
+                                        changeChicken = coChicken;
+                                        aRPick = 2;
+                                    } else if (addPick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //Show an error and reset
+                                        list = displayError(orderList);
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    }
+
+                                }else if(addPick == 3){
+                                    if(aRPick != 0){
+                                        changeChicken.crown.add("N Mayo");
+                                    }else{
+                                        coChicken.crown.add("N Mayo");
+                                    }
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    System.out.println("You added: Mayo");
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Chicken crown now contains: ");
+                                    if(aRPick != 0){
+                                        for (int i = 0; i < changeChicken.crown.size(); i++) {
+                                            System.out.println(changeChicken.crown.get(i));
+                                        }
+                                    }else{
+                                        for (int i = 0; i < coChicken.crown.size(); i++) {
+                                            System.out.println(coChicken.crown.get(i));
+                                        }
+                                    }
+
+                                    displayChoiceAdd();
+                                    addPick = scrChoice.nextInt();
+
+                                    if (addPick == 1) {
+                                        //Allow them to add the current item again
+                                        changeChicken = coChicken;
+                                        aRPick = 1;
+                                    } else if (addPick == 2) {
+                                        //Bring them to the Remove menu for the item
+                                        changeChicken = coChicken;
+                                        aRPick = 2;
+                                    } else if (addPick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //Show an error and reset
+                                        list = displayError(orderList);
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    }
+
+                                }else if(addPick == 4){
+                                    if(aRPick != 0){
+                                        changeChicken.crown.add("N Mustard");
+                                    }else{
+                                        coChicken.crown.add("N Mustard");
+                                    }
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    System.out.println("You added: Mustard");
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Chicken crown now contains: ");
+                                    if(aRPick != 0){
+                                        for (int i = 0; i < changeChicken.crown.size(); i++) {
+                                            System.out.println(changeChicken.crown.get(i));
+                                        }
+                                    }else{
+                                        for (int i = 0; i < coChicken.crown.size(); i++) {
+                                            System.out.println(coChicken.crown.get(i));
+                                        }
+                                    }
+
+                                    displayChoiceAdd();
+                                    addPick = scrChoice.nextInt();
+
+                                    if (addPick == 1) {
+                                        //Allow them to add the current item again
+                                        changeChicken = coChicken;
+                                        aRPick = 1;
+                                    } else if (addPick == 2) {
+                                        //Bring them to the Remove menu for the item
+                                        changeChicken = coChicken;
+                                        aRPick = 2;
+                                    } else if (addPick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //Show an error and reset
+                                        list = displayError(orderList);
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    }
+
+                                }else if(addPick == 5){
+                                    if(aRPick != 0){
+                                        changeChicken.crown.add("N Ketchup");
+                                    }else{
+                                        coChicken.crown.add("N Ketchup");
+                                    }
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    System.out.println("You added: Ketchup");
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Chicken crown now contains: ");
+                                    if(aRPick != 0){
+                                        for (int i = 0; i < changeChicken.crown.size(); i++) {
+                                            System.out.println(changeChicken.crown.get(i));
+                                        }
+                                    }else{
+                                        for (int i = 0; i < coChicken.crown.size(); i++) {
+                                            System.out.println(coChicken.crown.get(i));
+                                        }
+                                    }
+
+                                    displayChoiceAdd();
+                                    addPick = scrChoice.nextInt();
+
+                                    if (addPick == 1) {
+                                        //Allow them to add the current item again
+                                        changeChicken = coChicken;
+                                        aRPick = 1;
+                                    } else if (addPick == 2) {
+                                        //Bring them to the Remove menu for the item
+                                        changeChicken = coChicken;
+                                        aRPick = 2;
+                                    } else if (addPick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //Show an error and reset
+                                        list = displayError(orderList);
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    }
+
+                                }else{
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeChicken = null;
+                                    aRPick = 0;
+                                }
+
+                            }else if (addOrRemove == 2 || aRPick == 2){
+                                //REMOVE
+                                nl();
+                                printStar();
+                                nl();
+                                print("What would you like to remove from the crown? (Pick)");
+
+                                if (aRPick == 0) {
+                                    for (int i = 0; i < coChicken.crown.size(); i++) {
+                                        System.out.println("(" + (i + 1) + ") " + coChicken.crown.get(i));
+                                    }
+                                } else {
+                                    for (int i = 0; i < changeChicken.crown.size(); i++) {
+                                        System.out.println("(" + (i + 1) + ") " + changeChicken.crown.get(i));
+                                    }
+                                }
+
+                                int removeIndex = scrChoice.nextInt();
+                                removeIndex -= 1;
+
+                                if (!(removeIndex > coChicken.crown.size()) && aRPick == 0) {
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("You removed: " + coChicken.crown.get(removeIndex));
+                                    coBurger.crown.remove(removeIndex);
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Burger crown now contains: ");
+
+                                    for (int i = 0; i < coChicken.crown.size(); i++) {
+                                        System.out.println(coChicken.crown.get(i));
+                                    }
+
+                                    displayChoiceRemove();
+                                    int removePick = scrChoice.nextInt();
+
+                                    if (removePick == 1) {
+                                        //Allow them to remove the current item again
+                                        changeChicken = coChicken;
+                                        aRPick = 2;
+                                    } else if (removePick == 2) {
+                                        //Bring them to the add menu for the item
+                                        changeChicken = coChicken;
+                                        aRPick = 1;
+                                    } else if (removePick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //Show an error and reset
+                                        list = displayError(orderList);
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    }
+
+                                } else if (!(removeIndex > changeChicken.crown.size()) && aRPick == 2) {
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("You removed: " + changeChicken.crown.get(removeIndex));
+                                    changeChicken.crown.remove(removeIndex);
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Chicken crown now contains: ");
+
+                                    for (int i = 0; i < changeChicken.crown.size(); i++) {
+                                        System.out.println(changeChicken.crown.get(i));
+                                    }
+
+                                    displayChoiceRemove();
+                                    int removePick = scrChoice.nextInt();
+
+                                    if (removePick == 1) {
+                                        //Allow them to remove the current item again
+                                        changeChicken = coChicken;
+                                        aRPick = 2;
+                                    } else if (removePick == 2) {
+                                        //Bring them to the add menu for the item
+                                        changeChicken = coChicken;
+                                        aRPick = 1;
+                                    } else if (removePick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //Show an error and reset
+                                        list = displayError(orderList);
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    }
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeChicken = null;
+                                    aRPick = 0;
+                                }
+                            }
+                            addOrRemove = 0;
+                        }else if(chickenChangeChoice.contentEquals("Base")){
+
+                            if (addOrRemove == 1 || aRPick == 1) {
+                                //ADD
+                                nl();
+                                printStar();
+                                nl();
+                                print("Here are a list you can add to the Chicken base (Pick)");
+                                displayBaseOptions();
+                                int addPick = scrChoice.nextInt();
+
+                                if(addPick == 1){
+                                    if(aRPick != 0){
+                                        changeChicken.base.add("N 2oz Patty");
+                                    }else{
+                                        coChicken.base.add("N 2oz Patty");
+                                    }
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    System.out.println("You added: 2oz Patty");
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Chicken base now contains: ");
+                                    if(aRPick != 0){
+                                        for (int i = 0; i < changeChicken.base.size(); i++) {
+                                            System.out.println(changeChicken.base.get(i));
+                                        }
+                                    }else{
+                                        for (int i = 0; i < coChicken.base.size(); i++) {
+                                            System.out.println(coChicken.base.get(i));
+                                        }
+                                    }
+
+                                    displayChoiceAdd();
+                                    addPick = scrChoice.nextInt();
+
+                                    if (addPick == 1) {
+                                        //Allow them to add the current item again
+                                        changeChicken = coChicken;
+                                        aRPick = 1;
+                                    } else if (addPick == 2) {
+                                        //Bring them to the Remove menu for the item
+                                        changeChicken = coChicken;
+                                        aRPick = 2;
+                                    } else if (addPick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //Show an error and reset
+                                        list = displayError(orderList);
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    }
+
+                                }else if(addPick == 2){
+                                    if(aRPick != 0){
+                                        changeChicken.base.add("N 4oz Patty");
+                                    }else{
+                                        coChicken.base.add("N 4oz Patty");
+                                    }
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    System.out.println("You added: 4oz Patty");
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Chicken base now contains: ");
+                                    if(aRPick != 0){
+                                        for (int i = 0; i < changeChicken.base.size(); i++) {
+                                            System.out.println(changeChicken.base.get(i));
+                                        }
+                                    }else{
+                                        for (int i = 0; i < coChicken.base.size(); i++) {
+                                            System.out.println(coChicken.base.get(i));
+                                        }
+                                    }
+
+                                    displayChoiceAdd();
+                                    addPick = scrChoice.nextInt();
+
+                                    if (addPick == 1) {
+                                        //Allow them to add the current item again
+                                        changeChicken = coChicken;
+                                        aRPick = 1;
+                                    } else if (addPick == 2) {
+                                        //Bring them to the Remove menu for the item
+                                        changeChicken = coChicken;
+                                        aRPick = 2;
+                                    } else if (addPick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //Show an error and reset
+                                        list = displayError(orderList);
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    }
+
+                                }else if(addPick == 3){
+                                    if(aRPick != 0){
+                                        changeChicken.base.add("N Grilled Chicken");
+                                    }else{
+                                        coChicken.base.add("N Grilled Chicken");
+                                    }
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    System.out.println("You added: Grilled Chicken");
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Chicken now contains: ");
+                                    if(aRPick != 0){
+                                        for (int i = 0; i < changeChicken.base.size(); i++) {
+                                            System.out.println(changeChicken.base.get(i));
+                                        }
+                                    }else{
+                                        for (int i = 0; i < coChicken.base.size(); i++) {
+                                            System.out.println(coChicken.base.get(i));
+                                        }
+                                    }
+
+                                    displayChoiceAdd();
+                                    addPick = scrChoice.nextInt();
+
+                                    if (addPick == 1) {
+                                        //Allow them to add the current item again
+                                        changeChicken = coChicken;
+                                        aRPick = 1;
+                                    } else if (addPick == 2) {
+                                        //Bring them to the Remove menu for the item
+                                        changeChicken = coChicken;
+                                        aRPick = 2;
+                                    } else if (addPick == 3) {
+                                        //return to the main menu
+                                        list = "Choice";
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //Show an error and reset
+                                        list = displayError(orderList);
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    }
+
+                                }else if(addPick == 4){
+
+                                    if(aRPick != 0){
+                                        changeChicken.base.add("N Homestyle Chicken");
+                                    }else{
+                                        coChicken.base.add("N Homestyle Chicken");
+                                    }
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    System.out.println("You added: Homestyle Chicken");
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Chicken base now contains: ");
+                                    if(aRPick != 0){
+                                        for (int i = 0; i < changeChicken.base.size(); i++) {
+                                            System.out.println(changeChicken.base.get(i));
+                                        }
+                                    }else{
+                                        for (int i = 0; i < coChicken.base.size(); i++) {
+                                            System.out.println(coChicken.base.get(i));
+                                        }
+                                    }
+
+                                    displayChoiceAdd();
+                                    addPick = scrChoice.nextInt();
+
+                                    if (addPick == 1) {
+                                        //Allow them to add the current item again
+                                        changeChicken = coChicken;
+                                        aRPick = 1;
+                                    } else if (addPick == 2) {
+                                        //Bring them to the Remove menu for the item
+                                        changeChicken = coChicken;
+                                        aRPick = 2;
+                                    } else if (addPick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //Show an error and reset
+                                        list = displayError(orderList);
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    }
+
+                                }else if(addPick == 5){
+
+                                    if(aRPick != 0){
+                                        changeChicken.base.add("N Spicy Chicken");
+                                    }else{
+                                        coChicken.base.add("N Spicy Chicken");
+                                    }
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    System.out.println("You added: Spicy Chicken");
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Chicken base now contains: ");
+                                    if(aRPick != 0){
+                                        for (int i = 0; i < changeChicken.base.size(); i++) {
+                                            System.out.println(changeChicken.base.get(i));
+                                        }
+                                    }else{
+                                        for (int i = 0; i < coChicken.base.size(); i++) {
+                                            System.out.println(coChicken.base.get(i));
+                                        }
+                                    }
+
+                                    displayChoiceAdd();
+                                    addPick = scrChoice.nextInt();
+
+                                    if (addPick == 1) {
+                                        //Allow them to add the current item again
+                                        changeChicken = coChicken;
+                                        aRPick = 1;
+                                    } else if (addPick == 2) {
+                                        //Bring them to the Remove menu for the item
+                                        changeChicken = coChicken;
+                                        aRPick = 2;
+                                    } else if (addPick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //Show an error and reset
+                                        list = displayError(orderList);
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    }
+
+                                }else{
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeChicken = null;
+                                    aRPick = 0;
+                                }
+
+                            }else if (addOrRemove == 2 || aRPick == 2){
+                                //REMOVE
+                                nl();
+                                printStar();
+                                nl();
+                                print("What would you like to remove from the base? (Pick)");
+
+                                if (aRPick == 0) {
+                                    for (int i = 0; i < coChicken.base.size(); i++) {
+                                        System.out.println("(" + (i + 1) + ") " + coChicken.base.get(i));
+                                    }
+                                } else {
+                                    for (int i = 0; i < changeChicken.base.size(); i++) {
+                                        System.out.println("(" + (i + 1) + ") " + changeChicken.base.get(i));
+                                    }
+                                }
+
+                                int removeIndex = scrChoice.nextInt();
+                                removeIndex -= 1;
+
+                                if (!(removeIndex > coChicken.base.size()) && aRPick == 0) {
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("You removed: " + coChicken.base.get(removeIndex));
+                                    coChicken.base.remove(removeIndex);
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Chicken base now contains: ");
+
+                                    for (int i = 0; i < coChicken.base.size(); i++) {
+                                        System.out.println(coChicken.base.get(i));
+                                    }
+
+                                    displayChoiceRemove();
+                                    int removePick = scrChoice.nextInt();
+
+                                    if (removePick == 1) {
+                                        //Allow them to remove the current item again
+                                        changeChicken = coChicken;
+                                        aRPick = 2;
+                                    } else if (removePick == 2) {
+                                        //Bring them to the Add menu for the item
+                                        changeChicken = coChicken;
+                                        aRPick = 1;
+                                    } else if (removePick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //show an error
+                                        list = displayError(orderList);
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    }
+
+                                }else if (!(removeIndex > changeChicken.base.size()) && aRPick == 2) {
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("You removed: " + changeChicken.base.get(removeIndex));
+                                    changeChicken.base.remove(removeIndex);
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Chicken base now contains: ");
+
+                                    for (int i = 0; i < changeChicken.base.size(); i++) {
+                                        System.out.println(changeChicken.base.get(i));
+                                    }
+
+                                    displayChoiceRemove();
+                                    int removePick = scrChoice.nextInt();
+
+                                    if (removePick == 1) {
+                                        //Allow them to remove the current item again
+                                        changeChicken = coChicken;
+                                        aRPick = 2;
+                                    } else if (removePick == 2) {
+                                        //Bring them to the Add menu for the item
+                                        changeChicken = coChicken;
+                                        aRPick = 1;
+                                    } else if (removePick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //show an error
+                                        list = displayError(orderList);
+                                        changeChicken = null;
+                                        aRPick = 0;
+                                    }
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeChicken = null;
+                                    aRPick = 0;
+                                }
+                            }
+                            addOrRemove = 0;
+                        }
+                    }
+
+                    //Burger Chanage
+                    if (orderList.get(changePick - 1).itemType.contentEquals("Burger") || changeBurger != null) {
+
+                        if(aRPick == 0) {
+                            coBurger = (Burger) orderList.get(changePick - 1);
+                            nl();
+                            printStar();
+                            nl();
+                            print("Which do you want to change..." + " (1)[Crown] (2)[Base]");
+                            burgerPick = scrChoice.nextInt();
+
+                            if(burgerPick == 1){
+                                burgerChangeChoice = "Crown";
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("You are changing the crown for: " + coBurger);
+
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("What would you like to Add or Remove from the " + coBurger + " crown... (1)[Add] (2)[Remove]");
+
+                                addOrRemove = scrChoice.nextInt();
+                            }else if(burgerPick == 2){
+                                burgerChangeChoice = "Base";
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("You are changing the base for: " + coBurger);
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("What would you like to Add or Remove from the " + coBurger + " base... (1)[Add] (2)[Remove]");
+
+                                addOrRemove = scrChoice.nextInt();
+                            }else{
+                                //show error
+                            }
+                        }
+
+                        if(burgerChangeChoice.contentEquals("Crown")){
+
+                            if (addOrRemove == 1 || aRPick == 1) {
+                                //ADD
+                                nl();
+                                printStar();
+                                nl();
+                                print("Here are a list you can add to the Burger crown (Pick)");
+                                displayCrownOptions();
+                                int addPick = scrChoice.nextInt();
+
+                                if(addPick == 1){
+                                    if(aRPick != 0){
+                                        changeBurger.crown.add("N Ranch");
+                                    }else{
+                                        coBurger.crown.add("N Ranch");
+                                    }
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    System.out.println("You added: Ranch");
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Burger crown now contains: ");
+                                    if(aRPick != 0){
+                                        for (int i = 0; i < changeBurger.crown.size(); i++) {
+                                            System.out.println(changeBurger.crown.get(i));
+                                        }
+                                    }else{
+                                        for (int i = 0; i < coBurger.crown.size(); i++) {
+                                            System.out.println(coBurger.crown.get(i));
+                                        }
+                                    }
+
+                                    displayChoiceAdd();
+                                    addPick = scrChoice.nextInt();
+
+                                    if (addPick == 1) {
+                                        //Allow them to add the current item again
+                                        changeBurger = coBurger;
+                                        aRPick = 1;
+                                    } else if (addPick == 2) {
+                                        //Bring them to the Remove menu for the item
+                                        changeBurger = coBurger;
+                                        aRPick = 2;
+                                    } else if (addPick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //Show an error and reset
+                                        list = displayError(orderList);
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    }
+
+                                }else if(addPick == 2){
+                                    if(aRPick != 0){
+                                        changeBurger.crown.add("N Honey Mustard");
+                                    }else{
+                                        coBurger.crown.add("N Honey Mustard");
+                                    }
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    System.out.println("You added: Honey Mustard");
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Burger crown now contains: ");
+                                    if(aRPick != 0){
+                                        for (int i = 0; i < changeBurger.crown.size(); i++) {
+                                            System.out.println(changeBurger.crown.get(i));
+                                        }
+                                    }else{
+                                        for (int i = 0; i < coBurger.crown.size(); i++) {
+                                            System.out.println(coBurger.crown.get(i));
+                                        }
+                                    }
+
+                                    displayChoiceAdd();
+                                    addPick = scrChoice.nextInt();
+
+                                    if (addPick == 1) {
+                                        //Allow them to add the current item again
+                                        changeBurger = coBurger;
+                                        aRPick = 1;
+                                    } else if (addPick == 2) {
+                                        //Bring them to the Remove menu for the item
+                                        changeBurger = coBurger;
+                                        aRPick = 2;
+                                    } else if (addPick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //Show an error and reset
+                                        list = displayError(orderList);
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    }
+
+                                }else if(addPick == 3){
+                                    if(aRPick != 0){
+                                        changeBurger.crown.add("N Mayo");
+                                    }else{
+                                        coBurger.crown.add("N Mayo");
+                                    }
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    System.out.println("You added: Mayo");
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Burger crown now contains: ");
+                                    if(aRPick != 0){
+                                        for (int i = 0; i < changeBurger.crown.size(); i++) {
+                                            System.out.println(changeBurger.crown.get(i));
+                                        }
+                                    }else{
+                                        for (int i = 0; i < coBurger.crown.size(); i++) {
+                                            System.out.println(coBurger.crown.get(i));
+                                        }
+                                    }
+
+                                    displayChoiceAdd();
+                                    addPick = scrChoice.nextInt();
+
+                                    if (addPick == 1) {
+                                        //Allow them to add the current item again
+                                        changeBurger = coBurger;
+                                        aRPick = 1;
+                                    } else if (addPick == 2) {
+                                        //Bring them to the Remove menu for the item
+                                        changeBurger = coBurger;
+                                        aRPick = 2;
+                                    } else if (addPick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //Show an error and reset
+                                        list = displayError(orderList);
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    }
+
+                                }else if(addPick == 4){
+                                    if(aRPick != 0){
+                                        changeBurger.crown.add("N Mustard");
+                                    }else{
+                                        coBurger.crown.add("N Mustard");
+                                    }
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    System.out.println("You added: Mustard");
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Burger crown now contains: ");
+                                    if(aRPick != 0){
+                                        for (int i = 0; i < changeBurger.crown.size(); i++) {
+                                            System.out.println(changeBurger.crown.get(i));
+                                        }
+                                    }else{
+                                        for (int i = 0; i < coBurger.crown.size(); i++) {
+                                            System.out.println(coBurger.crown.get(i));
+                                        }
+                                    }
+
+                                    displayChoiceAdd();
+                                    addPick = scrChoice.nextInt();
+
+                                    if (addPick == 1) {
+                                        //Allow them to add the current item again
+                                        changeBurger = coBurger;
+                                        aRPick = 1;
+                                    } else if (addPick == 2) {
+                                        //Bring them to the Remove menu for the item
+                                        changeBurger = coBurger;
+                                        aRPick = 2;
+                                    } else if (addPick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //Show an error and reset
+                                        list = displayError(orderList);
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    }
+
+                                }else if(addPick == 5){
+                                    if(aRPick != 0){
+                                        changeBurger.crown.add("N Ketchup");
+                                    }else{
+                                        coBurger.crown.add("N Ketchup");
+                                    }
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    System.out.println("You added: Ketchup");
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Burger crown now contains: ");
+                                    if(aRPick != 0){
+                                        for (int i = 0; i < changeBurger.crown.size(); i++) {
+                                            System.out.println(changeBurger.crown.get(i));
+                                        }
+                                    }else{
+                                        for (int i = 0; i < coBurger.crown.size(); i++) {
+                                            System.out.println(coBurger.crown.get(i));
+                                        }
+                                    }
+
+                                    displayChoiceAdd();
+                                    addPick = scrChoice.nextInt();
+
+                                    if (addPick == 1) {
+                                        //Allow them to add the current item again
+                                        changeBurger = coBurger;
+                                        aRPick = 1;
+                                    } else if (addPick == 2) {
+                                        //Bring them to the Remove menu for the item
+                                        changeBurger = coBurger;
+                                        aRPick = 2;
+                                    } else if (addPick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //Show an error and reset
+                                        list = displayError(orderList);
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    }
+
+                                }else{
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeBurger = null;
+                                    aRPick = 0;
+                                }
+
+                            }else if (addOrRemove == 2 || aRPick == 2){
+                                //REMOVE
+                                nl();
+                                printStar();
+                                nl();
+                                print("What would you like to remove from the crown? (Pick)");
+
+                                if (aRPick == 0) {
+                                    for (int i = 0; i < coBurger.crown.size(); i++) {
+                                        System.out.println("(" + (i + 1) + ") " + coBurger.crown.get(i));
+                                    }
+                                } else {
+                                    for (int i = 0; i < changeBurger.crown.size(); i++) {
+                                        System.out.println("(" + (i + 1) + ") " + changeBurger.crown.get(i));
+                                    }
+                                }
+
+                                int removeIndex = scrChoice.nextInt();
+                                removeIndex -= 1;
+
+                                if (!(removeIndex > coBurger.crown.size()) && aRPick == 0) {
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("You removed: " + coBurger.crown.get(removeIndex));
+                                    coBurger.crown.remove(removeIndex);
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Burger crown now contains: ");
+
+                                    for (int i = 0; i < coBurger.crown.size(); i++) {
+                                        System.out.println(coBurger.crown.get(i));
+                                    }
+
+                                    displayChoiceRemove();
+                                    int removePick = scrChoice.nextInt();
+
+                                    if (removePick == 1) {
+                                        //Allow them to remove the current item again
+                                        changeBurger = coBurger;
+                                        aRPick = 2;
+                                    } else if (removePick == 2) {
+                                        //Bring them to the Add menu for the item
+                                        changeBurger = coBurger;
+                                        aRPick = 1;
+                                    } else if (removePick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //show an error
+                                        list = displayError(orderList);
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    }
+
+                                } else if (!(removeIndex > changeBurger.crown.size()) && aRPick == 2) {
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("You removed: " + changeBurger.crown.get(removeIndex));
+                                    changeBurger.crown.remove(removeIndex);
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Burger crown now contains: ");
+
+                                    for (int i = 0; i < changeBurger.crown.size(); i++) {
+                                        System.out.println(changeBurger.crown.get(i));
+                                    }
+
+                                    displayChoiceRemove();
+                                    int removePick = scrChoice.nextInt();
+
+                                    if (removePick == 1) {
+                                        //Allow them to remove the current item again
+                                        changeBurger = coBurger;
+                                        aRPick = 2;
+                                    } else if (removePick == 2) {
+                                        //Bring them to the Add menu for the item
+                                        changeBurger = coBurger;
+                                        aRPick = 1;
+                                    } else if (removePick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //show an error
+                                        list = displayError(orderList);
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    }
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeBurger = null;
+                                    aRPick = 0;
+                                }
+                            }
+                            addOrRemove = 0;
+                        }else if(burgerChangeChoice.contentEquals("Base")){
+
+                            if (addOrRemove == 1 || aRPick == 1) {
+                                //ADD
+                                nl();
+                                printStar();
+                                nl();
+                                print("Here are a list you can add to the Burger base (Pick)");
+                                displayBaseOptions();
+                                int addPick = scrChoice.nextInt();
+
+                                if(addPick == 1){
+                                    if(aRPick != 0){
+                                        changeBurger.base.add("N 2oz Patty");
+                                    }else{
+                                        coBurger.base.add("N 2oz Patty");
+                                    }
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    System.out.println("You added: 2oz Patty");
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Burger base now contains: ");
+                                    if(aRPick != 0){
+                                        for (int i = 0; i < changeBurger.base.size(); i++) {
+                                            System.out.println(changeBurger.base.get(i));
+                                        }
+                                    }else{
+                                        for (int i = 0; i < coBurger.base.size(); i++) {
+                                            System.out.println(coBurger.base.get(i));
+                                        }
+                                    }
+
+                                    displayChoiceAdd();
+                                    addPick = scrChoice.nextInt();
+
+                                    if (addPick == 1) {
+                                        //Allow them to add the current item again
+                                        changeBurger = coBurger;
+                                        aRPick = 1;
+                                    } else if (addPick == 2) {
+                                        //Bring them to the Remove menu for the item
+                                        changeBurger = coBurger;
+                                        aRPick = 2;
+                                    } else if (addPick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //Show an error and reset
+                                        list = displayError(orderList);
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    }
+
+                                }else if(addPick == 2){
+                                    if(aRPick != 0){
+                                        changeBurger.base.add("N 4oz Patty");
+                                    }else{
+                                        coBurger.base.add("N 4oz Patty");
+                                    }
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    System.out.println("You added: 4oz Patty");
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Burger base now contains: ");
+                                    if(aRPick != 0){
+                                        for (int i = 0; i < changeBurger.base.size(); i++) {
+                                            System.out.println(changeBurger.base.get(i));
+                                        }
+                                    }else{
+                                        for (int i = 0; i < coBurger.base.size(); i++) {
+                                            System.out.println(coBurger.base.get(i));
+                                        }
+                                    }
+
+                                    displayChoiceAdd();
+                                    addPick = scrChoice.nextInt();
+
+                                    if (addPick == 1) {
+                                        //Allow them to add the current item again
+                                        changeBurger = coBurger;
+                                        aRPick = 1;
+                                    } else if (addPick == 2) {
+                                        //Bring them to the Remove menu for the item
+                                        changeBurger = coBurger;
+                                        aRPick = 2;
+                                    } else if (addPick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //Show an error and reset
+                                        list = displayError(orderList);
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    }
+
+                                }else if(addPick == 3){
+                                if(aRPick != 0){
+                                    changeBurger.base.add("N Grilled Chicken");
+                                }else{
+                                    coBurger.base.add("N Grilled Chicken");
+                                }
+
+                                nl();
+                                printStar();
+                                nl();
+                                System.out.println("You added: Grilled Chicken");
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Burger now contains: ");
+                                if(aRPick != 0){
+                                    for (int i = 0; i < changeBurger.base.size(); i++) {
+                                        System.out.println(changeBurger.base.get(i));
+                                    }
+                                }else{
+                                    for (int i = 0; i < coBurger.base.size(); i++) {
+                                        System.out.println(coBurger.base.get(i));
+                                    }
+                                }
+
+                                displayChoiceAdd();
+                                addPick = scrChoice.nextInt();
+
+                                if (addPick == 1) {
+                                    //Allow them to add the current item again
+                                    changeSalad = coSalad;
+                                    aRPick = 1;
+                                } else if (addPick == 2) {
+                                    //Bring them to the Remove menu for the item
+                                    changeSalad = coSalad;
+                                    aRPick = 2;
+                                } else if (addPick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                }
+
+                            }else if(addPick == 4){
+                                    if(aRPick != 0){
+                                        changeBurger.base.add("N Homestyle Chicken");
+                                    }else{
+                                        coBurger.base.add("N Homestyle Chicken");
+                                    }
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    System.out.println("You added: Homestyle Chicken");
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Burger base now contains: ");
+                                    if(aRPick != 0){
+                                        for (int i = 0; i < changeBurger.base.size(); i++) {
+                                            System.out.println(changeBurger.base.get(i));
+                                        }
+                                    }else{
+                                        for (int i = 0; i < coBurger.base.size(); i++) {
+                                            System.out.println(coBurger.base.get(i));
+                                        }
+                                    }
+
+                                    displayChoiceAdd();
+                                    addPick = scrChoice.nextInt();
+
+                                    if (addPick == 1) {
+                                        //Allow them to add the current item again
+                                        changeBurger = coBurger;
+                                        aRPick = 1;
+                                    } else if (addPick == 2) {
+                                        //Bring them to the Remove menu for the item
+                                        changeBurger = coBurger;
+                                        aRPick = 2;
+                                    } else if (addPick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //Show an error and reset
+                                        list = displayError(orderList);
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    }
+
+                                }else if(addPick == 5){
+
+                                    if(aRPick != 0){
+                                        changeBurger.base.add("N Spicy Chicken");
+                                    }else{
+                                        coBurger.base.add("N Spicy Chicken");
+                                    }
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    System.out.println("You added: Spicy Chicken");
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Burger base now contains: ");
+                                    if(aRPick != 0){
+                                        for (int i = 0; i < changeBurger.base.size(); i++) {
+                                            System.out.println(changeBurger.base.get(i));
+                                        }
+                                    }else{
+                                        for (int i = 0; i < coBurger.base.size(); i++) {
+                                            System.out.println(coBurger.base.get(i));
+                                        }
+                                    }
+
+                                    displayChoiceAdd();
+                                    addPick = scrChoice.nextInt();
+
+                                    if (addPick == 1) {
+                                        //Allow them to add the current item again
+                                        changeBurger = coBurger;
+                                        aRPick = 1;
+                                    } else if (addPick == 2) {
+                                        //Bring them to the Remove menu for the item
+                                        changeBurger = coBurger;
+                                        aRPick = 2;
+                                    } else if (addPick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //Show an error and reset
+                                        list = displayError(orderList);
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    }
+
+                                }else{
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeBurger = null;
+                                    aRPick = 0;
+                                }
+
+                            }else if (addOrRemove == 2 || aRPick == 2){
+                                //REMOVE
+                                nl();
+                                printStar();
+                                nl();
+                                print("What would you like to remove from the base? (Pick)");
+
+                                if (aRPick == 0) {
+                                    for (int i = 0; i < coBurger.base.size(); i++) {
+                                        System.out.println("(" + (i + 1) + ") " + coBurger.base.get(i));
+                                    }
+                                } else {
+                                    for (int i = 0; i < changeBurger.base.size(); i++) {
+                                        System.out.println("(" + (i + 1) + ") " + changeBurger.base.get(i));
+                                    }
+                                }
+
+                                int removeIndex = scrChoice.nextInt();
+                                removeIndex -= 1;
+
+                                if (!(removeIndex > coBurger.base.size()) && aRPick == 0) {
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("You removed: " + coBurger.base.get(removeIndex));
+                                    coBurger.base.remove(removeIndex);
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Burger base now contains: ");
+
+                                    for (int i = 0; i < coBurger.base.size(); i++) {
+                                        System.out.println(coBurger.base.get(i));
+                                    }
+
+                                    displayChoiceRemove();
+                                    int removePick = scrChoice.nextInt();
+
+                                    if (removePick == 1) {
+                                        //Allow them to remove the current item again
+                                        changeBurger = coBurger;
+                                        aRPick = 2;
+                                    } else if (removePick == 2) {
+                                        //Bring them to the Add menu for the item
+                                        changeBurger = coBurger;
+                                        aRPick = 1;
+                                    } else if (removePick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //show an error
+                                        list = displayError(orderList);
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    }
+
+                                }else if (!(removeIndex > changeBurger.base.size()) && aRPick == 2) {
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("You removed: " + changeBurger.base.get(removeIndex));
+                                    changeBurger.base.remove(removeIndex);
+
+                                    nl();
+                                    printStar();
+                                    nl();
+                                    print("The Burger base now contains: ");
+
+                                    for (int i = 0; i < changeBurger.base.size(); i++) {
+                                        System.out.println(changeBurger.base.get(i));
+                                    }
+
+                                    displayChoiceRemove();
+                                    int removePick = scrChoice.nextInt();
+
+                                    if (removePick == 1) {
+                                        //Allow them to remove the current item again
+                                        changeBurger = coBurger;
+                                        aRPick = 2;
+                                    } else if (removePick == 2) {
+                                        //Bring them to the Add menu for the item
+                                        changeBurger = coBurger;
+                                        aRPick = 1;
+                                    } else if (removePick == 3) {
+                                        //return to the main menu
+                                        displayListOther();
+                                        list = listChoiceOther();
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    } else {
+                                        //show an error
+                                        list = displayError(orderList);
+                                        changeBurger = null;
+                                        aRPick = 0;
+                                    }
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeBurger = null;
+                                    aRPick = 0;
+                                }
+                            }
+                            addOrRemove = 0;
+                        }
+                    }
+
+                    //Salad Change
+                    if (orderList.get(changePick - 1).itemType.contentEquals("Salad") || changeSalad != null) {
+
+                        if(aRPick == 0) {
+                            coSalad = (Salad) orderList.get(changePick - 1);
+
+                            nl();
+                            printStar();
+                            nl();
+                            print("The Salad contains: ");
+
+                            for (int i = 0; i < coSalad.contain.size(); i++) {
+                                System.out.println(coSalad.contain.get(i));
+                            }
+                            nl();
+                            printStar();
+                            nl();
+                            print("What would you like to Add or Remove from the " + coSalad + " (1)[Add] (2)[Remove]");
+                            addOrRemove = scrChoice.nextInt();
+                        }
+
+                        if (addOrRemove == 1 || aRPick == 1) {
+                            //ADD
+                            nl();
+                            printStar();
+                            nl();
+                            print("Here are a list you can add to the Salad. (Pick)");
                             displaySaladOptions();
                             int addPick = scrChoice.nextInt();
 
@@ -191,6 +2720,57 @@ public class OrderDisplay {
                                 printStar();
                                 nl();
                                 System.out.println("You added: Diced Tomatos");
+
+                                nl();
+                                printStar();
+                                nl();
+                                print("The Salad now contains: ");
+                                if(aRPick != 0){
+                                    for (int i = 0; i < changeSalad.contain.size(); i++) {
+                                        System.out.println(changeSalad.contain.get(i));
+                                    }
+                                }else{
+                                    for (int i = 0; i < coSalad.contain.size(); i++) {
+                                        System.out.println(coSalad.contain.get(i));
+                                    }
+                                }
+
+                                displayChoiceAdd();
+                                addPick = scrChoice.nextInt();
+
+                                if (addPick == 1) {
+                                    //Allow them to add the current item again
+                                    changeSalad = coSalad;
+                                    aRPick = 1;
+                                } else if (addPick == 2) {
+                                    //Bring them to the Remove menu for the item
+                                    changeSalad = coSalad;
+                                    aRPick = 2;
+                                } else if (addPick == 3) {
+                                    //return to the main menu
+                                    list = "Choice";
+                                    displayListOther();
+                                    list = listChoiceOther();
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                } else {
+                                    //Show an error and reset
+                                    list = displayError(orderList);
+                                    changeSalad = null;
+                                    aRPick = 0;
+                                }
+
+                            }else if(addPick == 3){
+                                if(aRPick != 0){
+                                    changeSalad.contain.add("N Asiago Cheese");
+                                }else{
+                                    coSalad.contain.add("N Asiago Cheese");
+                                }
+
+                                nl();
+                                printStar();
+                                nl();
+                                System.out.println("You added: Asiago Cheese");
 
                                 nl();
                                 printStar();
@@ -393,8 +2973,8 @@ public class OrderDisplay {
                                     changeSalad = null;
                                     aRPick = 0;
                                 }
-                            }else if(!(removeIndex > coSalad.contain.size()) && aRPick > 0){
-                                print("You removed: " + coSalad.contain.get(removeIndex));
+                            }else if(!(removeIndex > changeSalad.contain.size()) && aRPick > 0){
+                                print("You removed: " + changeSalad.contain.get(removeIndex));
                                 coSalad.contain.remove(removeIndex);
 
                                 nl();
@@ -437,6 +3017,7 @@ public class OrderDisplay {
                                 aRPick = 0;
                             }
                         }
+                        addOrRemove = 0;
                     }
                 }
 
@@ -648,7 +3229,7 @@ public class OrderDisplay {
                                 }
                                 break;
                             case "7":
-                                Chicken c7 = new Chicken("5 Piece Chicken Nugget", "Chicken");
+                                Chicken c7 = new Chicken("5 Piece Chicken Nugget", "Chicken Side");
                                 if (wantToComboChicken(c7)) {
                                     //Call the Burger Combo Function
                                     whatSauce(c7);
@@ -684,7 +3265,7 @@ public class OrderDisplay {
                                 }
                                 break;
                             case "8":
-                                Chicken c8 = new Chicken("10 Piece Chicken Nugget", "Chicken");
+                                Chicken c8 = new Chicken("10 Piece Chicken Nugget", "Chicken Side");
                                 if (wantToComboChicken(c8)) {
                                     //Call the Burger Combo Function
                                     whatSauce(c8);
@@ -720,7 +3301,7 @@ public class OrderDisplay {
                                 }
                                 break;
                             case "9":
-                                Chicken c9 = new Chicken("Homestyle Chicken Strips", "Chicken");
+                                Chicken c9 = new Chicken("Homestyle Chicken Strips", "Chicken Side");
                                 if (wantToComboChicken(c9)) {
                                     //Call the Burger Combo Function
                                     chickenCombo CC9 = currentChickenCombo(c9);
@@ -752,7 +3333,7 @@ public class OrderDisplay {
                                 }
                                 break;
                             case "10":
-                                Chicken c10 = new Chicken("Spicy Chicken Strips", "Chicken");
+                                Chicken c10 = new Chicken("Spicy Chicken Strips", "Chicken Side");
                                 if (wantToComboChicken(c10)) {
                                     //Call the Burger Combo Function
                                     whatSauce(c10);
@@ -787,7 +3368,7 @@ public class OrderDisplay {
                                 break;
 
                             case "11":
-                                Chicken c11 = new Chicken("Spicy Chicken Wrap", "Chicken");
+                                Chicken c11 = new Chicken("Spicy Chicken Wrap", "Chicken Wrap");
                                 if (wantToComboChicken(c11)){
                                     //Call the Burger Combo Function
                                     whatSauce(c11);
@@ -821,7 +3402,7 @@ public class OrderDisplay {
                                 }
                                 break;
                             case "12":
-                                Chicken c12 = new Chicken("Homestyle Chicken Wrap", "Chicken");
+                                Chicken c12 = new Chicken("Homestyle Chicken Wrap", "Chicken Wrap");
                                 if (wantToComboChicken(c12)) {
                                     //Call the Burger Combo Function
                                     chickenCombo CC12 = currentChickenCombo(c12);
@@ -853,7 +3434,7 @@ public class OrderDisplay {
                                 }
                                 break;
                             case "13":
-                                Chicken c13 = new Chicken("Grilled Chicken Wrap", "Chicken");
+                                Chicken c13 = new Chicken("Grilled Chicken Wrap", "Chicken Wrap");
                                 if (wantToComboChicken(c13)) {
                                     //Call the Burger Combo Function
                                     chickenCombo CC13 = currentChickenCombo(c13);
@@ -2066,8 +4647,11 @@ public class OrderDisplay {
         }else{
             //Throw an error and return to the main list
             print("Error: That's not a accessible option");
-            list = "Choice";
-            orderContain(obj);
+            if(orderContain(obj)) {
+                list = listChoiceOther();
+            }else{
+                list = listChoice();
+            }
         }
         return list;
     }
@@ -2707,6 +5291,54 @@ public class OrderDisplay {
         print("(4) 3 Pieces of Bacon");
         print("(5) Bacon bits");
 
+    }
+
+    public static void displayCrownOptions(){
+        nl();
+        printStar();
+        nl();
+        print("(1) Ranch");
+        print("(2) Honey Mustard");
+        print("(3) Mayo");
+        print("(4) Mustard");
+        print("(5) Ketchup");
+
+    }
+
+    public static void displayBaseOptions(){
+        nl();
+        printStar();
+        nl();
+        print("(1) 2oz Patty");
+        print("(2) 4oz Patty");
+        print("(3) Grilled Chicken");
+        print("(4) Homestyle Chicken");
+        print("(5) Spicy Chicken");
+
+    }
+
+    public static void displaySauceOptions(){
+        nl();
+        printStar();
+        nl();
+        print("(1) Sweet and Sour");
+        print("(2) BBQ");
+        print("(3) Buttermilk Ranch");
+        print("(4) Honey Mustard");
+        print("(5) Creamy sriracha");
+        print("(6) Ketchup");
+    }
+
+    public static void displayWrapOptions(){
+        nl();
+        printStar();
+        nl();
+        print("(1) Ranch");
+        print("(2) Honey Mustard");
+        print("(3) Shredded Cheese");
+        print("(4) Half a Grilled Chicken");
+        print("(5) Half a Spicy Chicken");
+        print("(6) Half a Homestyle Chicken");
     }
 
 

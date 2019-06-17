@@ -42,6 +42,7 @@ public class Salad extends Order {
                 contain.add("Salad Blend");
                 price = 0.1;
             }
+            canBeChanged = true;
         }
 
         if(nameType.equals("Taco Salad")){
@@ -66,6 +67,7 @@ public class Salad extends Order {
                 contain.add("Lettue Blend");
                 price = 0.1;
             }
+            canBeChanged = true;
         }
 
         if(nameType.equals("Apple Pecan Chicken Salad")){
@@ -92,6 +94,7 @@ public class Salad extends Order {
                 contain.add("Salad Blend");
                 price = 0.1;
             }
+            canBeChanged = true;
         }
 
         if(nameType.equals("Grilled Chicken Casar Salad")){
@@ -115,6 +118,7 @@ public class Salad extends Order {
                 contain.add("Lettue Blend");
                 price = 0.1;
             }
+            canBeChanged = true;
         }
 
         if(nameType.equals("Caesar Side Salad")){
@@ -123,6 +127,7 @@ public class Salad extends Order {
             contain.add("Lettue Blend");
             contain.add("Croutons");
             price = 0.1;
+            canBeChanged = true;
         }
 
         if(nameType.equals("Garden Side Salad")){
@@ -131,6 +136,7 @@ public class Salad extends Order {
             contain.add("Salad Blend");
             contain.add("Croutons");
             price = 0.1;
+            canBeChanged = true;
         }
     }
 
