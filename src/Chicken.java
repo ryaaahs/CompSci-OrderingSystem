@@ -9,7 +9,7 @@ public class Chicken extends Order {
     ArrayList<String> crown = new ArrayList<String>();
     ArrayList<String> base = new ArrayList<String>();
     ArrayList<String> item = new ArrayList<String>();
-    //ArrayList<String> sauce = new ArrayList<String>();
+
 
     public Chicken(String nameType, String itemType) {
         super(itemType, nameType);
@@ -22,7 +22,7 @@ public class Chicken extends Order {
         if(nameType.equals("Spicy Chicken")){
             bunType = "Premium";
             canCombo = true;
-            price = 0.1;
+            price = 5.09;
             //Crown
             crown.add("Mayo");
             crown.add("Tomato");
@@ -36,7 +36,7 @@ public class Chicken extends Order {
         if(nameType.equals("Homestyle Chicken")){
             bunType = "Premium";
             canCombo = true;
-            price = 0.1;
+            price = 5.09;
             //Crown
             crown.add("Mayo");
             crown.add("Tomato");
@@ -50,7 +50,7 @@ public class Chicken extends Order {
         if(nameType.equals("Grilled Chicken")){
             bunType = "Premium";
             canCombo = true;
-            price = 0.1;
+            price = 5.09;
             //Crown
             crown.add("Honey Mustard");
             crown.add("Tomato");
@@ -64,7 +64,7 @@ public class Chicken extends Order {
         if(nameType.equals("Spicy Asiago Ranch Club")){
             bunType = "Premium";
             canCombo = true;
-            price = 0.1;
+            price = 6.19;
             //Crown
             crown.add("Mayo");
             crown.add("Tomato");
@@ -80,7 +80,7 @@ public class Chicken extends Order {
         if(nameType.equals("Homestyle Asiago Ranch Club")){
             bunType = "Premium";
             canCombo = true;
-            price = 0.1;
+            price = 6.19;
             //Crown
             crown.add("Ranch");
             crown.add("Tomato");
@@ -96,7 +96,7 @@ public class Chicken extends Order {
         if(nameType.equals("Grilled Asiago Ranch Club")){
             bunType = "Premium";
             canCombo = true;
-            price = 0.1;
+            price = 6.19;
             //Crown
             crown.add("Honey Mustard");
             crown.add("Tomato");
@@ -112,7 +112,7 @@ public class Chicken extends Order {
         if(nameType.equals("5 Piece Chicken Nugget")){
             bunType = "Null";
             canCombo = false;
-            price = 0.1;
+            price = 1.89;
             canBeChanged = true;
             //Add Suace to the order
         }
@@ -120,7 +120,7 @@ public class Chicken extends Order {
         if(nameType.equals("10 Piece Chicken Nugget")){
             bunType = "Null";
             canCombo = true;
-            price = 0.1;
+            price = 3.68;
             canBeChanged = true;
             //Item
 
@@ -130,7 +130,7 @@ public class Chicken extends Order {
         if(nameType.equals("Homestyle Chicken Strips")){
             bunType = "Null";
             canCombo = true;
-            price = 0.1;
+            price = 3.86;
             canBeChanged = true;
             //Item
             //Add Suace to the order
@@ -139,7 +139,7 @@ public class Chicken extends Order {
         if(nameType.equals("Spicy Chicken Strips")){
             bunType = "Null";
             canCombo = true;
-            price = 0.1;
+            price = 3.86;
             canBeChanged = true;
             //Item
             //Add Suace to the order
@@ -148,7 +148,7 @@ public class Chicken extends Order {
         if(nameType.equals("Grilled Chicken Wrap")){
             bunType = "Wrap";
             canCombo = false;
-            price = 0.1;
+            price = 2.18;
             //Base
             base.add("Honey Mustard");
             base.add("Shredded Cheese");
@@ -160,7 +160,7 @@ public class Chicken extends Order {
         if(nameType.equals("Spicy Chicken Wrap")){
             bunType = "Wrap";
             canCombo = false;
-            price = 0.1;
+            price = 2.18;
             //Base
             base.add("Ranch Sauce");
             base.add("Shredded Cheese");
@@ -172,7 +172,7 @@ public class Chicken extends Order {
         if(nameType.equals("Homestyle Chicken Wrap")){
             bunType = "Wrap";
             canCombo = false;
-            price = 0.1;
+            price = 2.18;
             //Base
             base.add("Ranch Sauce");
             base.add("Shredded Cheese");

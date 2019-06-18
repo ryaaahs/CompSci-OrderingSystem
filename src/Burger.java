@@ -18,7 +18,7 @@ public class Burger extends Order {
         if(nameType.equals("Single Cheese")){
             bunType = "Premium";
             canCombo = true;
-            price = 1;
+            price = 4.19;
             //Crown
             crown.add("Mayo");
             crown.add("Ketchup");
@@ -36,7 +36,7 @@ public class Burger extends Order {
         if(nameType.equals("Double Cheese")){
             bunType = "Premium";
             canCombo = true;
-            price = 0.1;
+            price = 5.19;
             //Crown
             crown.add("Mayo");
             crown.add("Ketchup");
@@ -55,7 +55,7 @@ public class Burger extends Order {
         if(nameType.equals("Triple Cheese")){
             bunType = "Premium";
             canCombo = true;
-            price = 0.1;
+            price = 6.09;
             //Crown
             crown.add("Mayo");
             crown.add("Ketchup");
@@ -76,7 +76,7 @@ public class Burger extends Order {
         if(nameType.equals("Single Bacon Deluxe")){
             bunType = "Premium";
             canCombo = true;
-            price = 0.1;
+            price = 5.19;
             //Crown
             crown.add("Mayo");
             crown.add("Ketchup");
@@ -95,7 +95,7 @@ public class Burger extends Order {
         if(nameType.equals("Double Bacon Deluxe")){
             bunType = "Premium";
             canCombo = true;
-            price = 0.1;
+            price = 6.19;
             //Crown
             crown.add("Mayo");
             crown.add("Ketchup");
@@ -115,7 +115,7 @@ public class Burger extends Order {
         if(nameType.equals("Triple Bacon Deluxe")){
             bunType = "Premium";
             canCombo = true;
-            price = 0.1;
+            price = 7.09;
             //Crown
             crown.add("Mayo");
             crown.add("Ketchup");
@@ -137,7 +137,7 @@ public class Burger extends Order {
         if(nameType.equals("Single Baconator")){
             bunType = "Premium";
             canCombo = true;
-            price = 0.1;
+            price = 6.19;
             //Crown
             crown.add("Mayo");
             crown.add("Ketchup");
@@ -152,7 +152,7 @@ public class Burger extends Order {
         if(nameType.equals("Double Baconator")){
             bunType = "Premium";
             canCombo = true;
-            price = 0.1;
+            price = 7.19;
             //Crown
             crown.add("Mayo");
             crown.add("Ketchup");
@@ -169,7 +169,7 @@ public class Burger extends Order {
         if(nameType.equals("Triple Baconator")){
             bunType = "Premium";
             canCombo = true;
-            price = 0.1;
+            price = 8.09;
             //Crown
             crown.add("Mayo");
             crown.add("Ketchup");
@@ -189,7 +189,7 @@ public class Burger extends Order {
         if(nameType.equals("Son of the Baconator")){
             bunType = "Premium";
             canCombo = true;
-            price = 0.1;
+            price = 4.69;
             //Crown
             crown.add("Mayo");
             crown.add("Ketchup");
@@ -206,7 +206,7 @@ public class Burger extends Order {
         if(nameType.equals("Jr. Hamburger Deluxe")){
             bunType = "Value";
             canCombo = false;
-            price = 0.1;
+            price = 1.89;
             //Crown
             crown.add("Mayo");
             crown.add("Ketchup");
@@ -223,7 +223,7 @@ public class Burger extends Order {
         if(nameType.equals("Jr. Cheeseburger Deluxe")){
             bunType = "Value";
             canCombo = false;
-            price = 0.1;
+            price = 1.89;
             //Crown
             crown.add("Mayo");
             crown.add("Ketchup");
@@ -240,9 +240,9 @@ public class Burger extends Order {
         if(nameType.equals("Jr. Bacon Cheeseburger")){
             bunType = "Value";
             canCombo = false;
-            price = 0.1;
+            price = 2.18;
             //Crown
-            crown.add("Mayo");;
+            crown.add("Mayo");
             crown.add("Tomato");
             crown.add("Iceberg Lettue");
             //Base
@@ -255,7 +255,7 @@ public class Burger extends Order {
         if(nameType.equals("Cheesey Cheeseburger")){
             bunType = "Value";
             canCombo = false;
-            price = 0.1;
+            price = 1.89;
             //Crown
             crown.add("Cheese Sauce");
             //Base

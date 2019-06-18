@@ -28,7 +28,7 @@ public class Salad extends Order {
                 contain.add("Pepper Jack Cheese");
                 contain.add("Southwest Dressing");
                 contain.add("Salad Blend");
-                price = 0.1;
+                price = 5.69;
             }else if(size.equals("Full")){
                 contain.add("Scoop of Avocado");
                 contain.add("Scoop of Avocado");
@@ -40,7 +40,7 @@ public class Salad extends Order {
                 contain.add("Southwest Dressing");
                 contain.add("Southwest Dressing");
                 contain.add("Salad Blend");
-                price = 0.1;
+                price = 10;
             }
             canBeChanged = true;
         }
@@ -54,7 +54,7 @@ public class Salad extends Order {
                 contain.add("Dice Tomato");
                 contain.add("Shredded Cheese");
                 contain.add("Lettue Blend");
-                price = 0.1;
+                price = 5.69;
             }else if(size.equals("Full")){
                 contain.add("Tortilla Chip Bag");
                 contain.add("Salsa");
@@ -65,7 +65,7 @@ public class Salad extends Order {
                 contain.add("Shredded Cheese");
                 contain.add("Shredded Cheese");
                 contain.add("Lettue Blend");
-                price = 0.1;
+                price = 10;
             }
             canBeChanged = true;
         }
@@ -79,7 +79,7 @@ public class Salad extends Order {
                 contain.add("Pomegranate Vinaigrette");
                 contain.add("Half Grill Chicken");
                 contain.add("Salad Blend");
-                price = 0.1;
+                price = 5.69;
             }else if(size.equals("Full")){
                 contain.add("Roasted Pecans");
                 contain.add("Crumbled Blue Cheese");
@@ -92,7 +92,7 @@ public class Salad extends Order {
                 contain.add("Pomegranate Vinaigrette");
                 contain.add("Full Grill Chicken");
                 contain.add("Salad Blend");
-                price = 0.1;
+                price = 10;
             }
             canBeChanged = true;
         }
@@ -105,7 +105,7 @@ public class Salad extends Order {
                 contain.add("Caesar Dressing");
                 contain.add("Half Grill Chicken");
                 contain.add("Lettue Blend");
-                price = 0.1;
+                price = 5.69;
             }else if(size.equals("Full")){
                 contain.add("Croutons");
                 contain.add("Bacon bits");
@@ -116,7 +116,7 @@ public class Salad extends Order {
                 contain.add("Caesar Dressing");
                 contain.add("Full Grill Chicken");
                 contain.add("Lettue Blend");
-                price = 0.1;
+                price = 10;
             }
             canBeChanged = true;
         }
@@ -126,7 +126,7 @@ public class Salad extends Order {
             contain.add("Bacon bits");
             contain.add("Lettue Blend");
             contain.add("Croutons");
-            price = 0.1;
+            price = 2.18;
             canBeChanged = true;
         }
 
@@ -135,7 +135,7 @@ public class Salad extends Order {
             contain.add("Shredded Chedder Cheese");
             contain.add("Salad Blend");
             contain.add("Croutons");
-            price = 0.1;
+            price = 2.18;
             canBeChanged = true;
         }
     }

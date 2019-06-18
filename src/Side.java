@@ -21,11 +21,11 @@ public class Side extends Order {
     public void sideList(){
         if(nameType.equals("French Fries")) {
             if (size.equals("Small")) {
-                price = 1;
+                price = 1.89;
             } else if (size.equals("Medium")) {
-                price = 0.1;
+                price = 2.79;
             }else if(size.equals("Large")){
-                price = 0.1;
+                price = 3.50;
             }
             canBeChanged = true;
         }
@@ -33,7 +33,7 @@ public class Side extends Order {
         if(nameType.equals("Poutine")) {
             contain.add("Gravy");
             contain.add("Cheese Curds");
-            price = 0.1;
+            price = 5.69;
             canBeChanged = true;
         }
 
@@ -41,7 +41,7 @@ public class Side extends Order {
             contain.add("Gravy");
             contain.add("Cheese Curds");
             contain.add("Ripped Bacon");
-            price = 0.1;
+            price = 6.69;
             canBeChanged = true;
         }
 
@@ -49,7 +49,7 @@ public class Side extends Order {
             contain.add("Chilli");
             contain.add("Cheese Sauce");
             contain.add("Shredded Cheese");
-            price = 0.1;
+            price = 5.69;
             canBeChanged = true;
         }
 
@@ -57,15 +57,15 @@ public class Side extends Order {
             contain.add("Chilli");
             contain.add("Cheese Sauce");
             contain.add("Nachos");
-            price = 0.1;
+            price = 2.18;
             canBeChanged = true;
         }
 
         if(nameType.equals("Chilli")) {
             if (size.equals("Small")) {
-                price = 0.1;
+                price = 2.18;
             }else{
-                price = 0.1;
+                price = 3.29;
             }
             canBeChanged = true;
         }
@@ -75,7 +75,7 @@ public class Side extends Order {
             contain.add("Bacon bits");
             contain.add("Lettue Blend");
             contain.add("Croutons");
-            price = 0.1;
+            price = 2.18;
             canBeChanged = true;
         }
 
@@ -84,20 +84,20 @@ public class Side extends Order {
             contain.add("Shredded Chedder Cheese");
             contain.add("Salad Blend");
             contain.add("Croutons");
-            price = 0.1;
+            price = 2.18;
             canBeChanged = true;
         }
 
         if(nameType.equals("Plain Potato")){
             contain.add("Plain Potato");
-            price = 0.1;
+            price = 2.18;
             canBeChanged = true;
         }
 
         if(nameType.equals("Sour Cream & Chives Potato")){
             contain.add("Chives");
             contain.add("Sour Cream");
-            price = 0.1;
+            price = 2.79;
             canBeChanged = true;
         }
 
@@ -105,7 +105,7 @@ public class Side extends Order {
             contain.add("Bacon Bits");
             contain.add("Cheese Sauces");
             contain.add("Shredded Cheese");
-            price = 0.1;
+            price = 3.50;
             canBeChanged = true;
         }
 
@@ -113,7 +113,7 @@ public class Side extends Order {
             contain.add("Chilli");
             contain.add("Cheese Sauces");
             contain.add("Shredded Cheese");
-            price = 0.1;
+            price = 3.50;
             canBeChanged = true;
         }
     }
